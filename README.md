@@ -1,6 +1,6 @@
 Aplikasi sedang tahap pengembangan
 
-Overview dari website yang sedang dikembangkan
+Overview dari ecommerce yang sedang dikembangkan
 
 ![alt text](image1.jpg)
 ![alt text](image2.jpg)
