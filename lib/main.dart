@@ -69,6 +69,7 @@ Future<void> main() async {
   String? path;
   int? orderId;
 
+  /**
   try {
     path = await initDynamicLinks();
     channel = const AndroidNotificationChannel(
@@ -88,6 +89,7 @@ Future<void> main() async {
   } catch(e) {
     debugPrint('error ===> $e');
   }
+   */
 
   GoRouter.optionURLReflectsImperativeAPIs = true;
 
@@ -131,14 +133,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Consumer<SplashProvider>(builder: (context, splashProvider, child) {
       return MaterialApp.router(
         routerConfig: RouterHelper.goRoutes,

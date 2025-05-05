@@ -18,9 +18,9 @@ class BranchHelper {
       branchProvider.setBranch(branchProvider.selectedBranchId!, splashProvider);
 
       if(RouterHelper.dashboard == GoRouter.of(Get.context!).routeInformationProvider.value.uri.path) {
-
+        RouterHelper.getMainRoute(action: RouteAction.pushReplacement);
       } else {
-
+        RouterHelper.getMainRoute(action: RouteAction.pushNameAndRemoveUntil);
       }
 
       showCustomSnackBarHelper("Cabang berhasil dipilih", isError: false);

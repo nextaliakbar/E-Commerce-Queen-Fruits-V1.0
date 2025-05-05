@@ -26,7 +26,6 @@ class CustomButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     final ButtonStyle flatButtonStyle = TextButton.styleFrom(
       backgroundColor: onTap == null ? Theme.of(context).disabledColor : transparent
           ? Colors.transparent :backgroundColor ?? ColorResources.primaryColor,

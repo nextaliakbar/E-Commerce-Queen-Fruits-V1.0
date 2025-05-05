@@ -82,9 +82,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       } else {
         Future.delayed(const Duration(milliseconds: 10)).then((v) {
           RouterHelper.getBranchListScreen(action: RouteAction.pushNameAndRemoveUntil);
-          // Provider.of<BranchProvider>(Get.context!, listen: false).getBranchId() != -1
-          //     ? RouterHelper.getMainRoute(action: RouteAction.pushNameAndRemoveUntil)
-          //     : RouterHelper.getBranchListScreen(action: RouteAction.pushNameAndRemoveUntil);
+          Provider.of<BranchProvider>(Get.context!, listen: false).getBranchId() != -1
+              ? RouterHelper.getMainRoute(action: RouteAction.pushNameAndRemoveUntil)
+              : RouterHelper.getBranchListScreen(action: RouteAction.pushNameAndRemoveUntil);
         });
       }
     }

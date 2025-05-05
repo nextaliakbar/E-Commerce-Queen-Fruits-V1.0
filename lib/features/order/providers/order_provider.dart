@@ -7,4 +7,16 @@ class OrderProvider extends ChangeNotifier {
   final SharedPreferences? sharedPreferences;
 
   OrderProvider({required this.orderRepo, required this.sharedPreferences});
+
+  bool _isStoreCloseNow = true;
+
+  bool get isStoreCloseNow => _isStoreCloseNow;
+
+  void changeStatus(bool status, {bool notify = false}) {
+    _isStoreCloseNow = status;
+
+    if(notify) {
+      notifyListeners();
+    }
+  }
 }

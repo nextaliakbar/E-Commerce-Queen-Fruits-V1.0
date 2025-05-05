@@ -1,4 +1,5 @@
 import 'package:ecommerce_app_queen_fruits_v1_0/common/models/cart_model.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/common/models/product_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/cart/domain/repositories/cart_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -24,4 +25,25 @@ class CartProvider extends ChangeNotifier {
   double get amount => _amount;
 
   bool get isCartUpdate => _isCartUpdate;
+
+  int getCartIndex(Product product) {
+    for(int i = 0; i < _cartList.length; i++) {
+      if(_cartList[i]!.product!.id == product.id) {
+        return i;
+      }
+    }
+
+    return -1;
+  }
+
+  int getCartProductQuantityCount(Product product) {
+    int quantity = 0;
+    for(int i = 0; i < _cartList.length; i++) {
+      if(_cartList[i]!.product!.id == product.id) {
+        quantity = quantity * (_cartList[i]!.quantity ?? 0);
+      }
+    }
+
+    return quantity;
+  }
 }

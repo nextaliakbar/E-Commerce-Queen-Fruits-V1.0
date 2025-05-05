@@ -4,7 +4,7 @@ extension StringExtension on String {
 
   String camelCaseToSnakeCase() {
     return replaceAllMapped(
-      RegExp(r'([A-Z]'),
+      RegExp(r'([A-Z])'),
         (Match match) => "_${match.group(1)!.toLowerCase()}"
     );
   }

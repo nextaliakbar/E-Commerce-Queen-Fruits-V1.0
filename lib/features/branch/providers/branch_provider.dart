@@ -1,6 +1,7 @@
 import 'package:ecommerce_app_queen_fruits_v1_0/common/models/config_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/providers/data_sync_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/address/providers/location_provider.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/features/home/screens/home_screen.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/domain/repositories/splash_repo.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/main.dart';
@@ -40,9 +41,27 @@ class BranchProvider extends DataSyncProvider {
     }
   }
 
+  Branches? getBranch({int? id}) {
+    int branchId = id ?? getBranchId();
+    Branches? branch;
+    ConfigModel config = Provider.of<SplashProvider>(Get.context!, listen: false)
+    .configModel!;
+
+    if(config.branches != null && config.branches!.isNotEmpty) {
+      branch = config.branches!.firstWhere((branch) => branch!.id == branchId, orElse: ()=> null);
+
+      if(branch == null) {
+        splashRepo!.setBranchId(-1);
+      }
+    }
+
+    return branch;
+  }
+
   Future<void> setBranch(int id, SplashProvider splashProvider) async {
     await splashRepo!.setBranchId(id);
     await splashProvider.getDeliveryInfo(id);
+    await HomeScreen.loadData(true);
     notifyListeners();
   }
 

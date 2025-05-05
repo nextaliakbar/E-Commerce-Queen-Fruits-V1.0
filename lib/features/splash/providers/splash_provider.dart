@@ -21,6 +21,7 @@ class SplashProvider extends DataSyncProvider {
   DeliveryInfoModel? _deliveryInfoModel;
   ConfigModel? _configModel;
   BaseUrls? _baseUrls;
+  final DateTime _currentTime = DateTime.now();
 
   Future<bool> initSharedData() {
     return splashRepo!.initSharedData();
@@ -30,6 +31,7 @@ class SplashProvider extends DataSyncProvider {
   DeliveryInfoModel? get deliveryInfoModel => _deliveryInfoModel;
   ConfigModel? get configModel => _configModel;
   BaseUrls? get baseUrls => _baseUrls;
+  DateTime get currentTime => _currentTime;
 
   Future<void> getPolicyPage() async {
     fetchAndSyncData(
@@ -79,6 +81,7 @@ class SplashProvider extends DataSyncProvider {
           }
         }
     }
+    return _configModel;
   }
 
   Future<void> _onConfigAction(BuildContext context) async {

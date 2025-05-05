@@ -1,3 +1,4 @@
+import 'package:ecommerce_app_queen_fruits_v1_0/common/enums/data_source_enum.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/models/api_response_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/repositories/data_sync_repo.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/data/datasource/remote/exception/api_error_handler.dart';
@@ -18,5 +19,9 @@ class SearchRepo extends DataSyncRepo {
     } catch(e) {
       return ApiResponseModel.withError(ApiErrorHandler.getMessage(e));
     }
+  }
+
+  Future<ApiResponseModel<T>> getSearchRecommendedProduct<T>({required DataSourceEnum source}) async {
+    return await fetchData(AppConstants.searchRecommended, source);
   }
 }

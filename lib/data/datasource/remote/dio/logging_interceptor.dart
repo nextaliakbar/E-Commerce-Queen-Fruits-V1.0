@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/common/models/product_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class LoggingInterceptor extends InterceptorsWrapper {
@@ -6,13 +7,10 @@ class LoggingInterceptor extends InterceptorsWrapper {
 
   @override
   Future onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    // TODO: implement onRequest
     return super.onRequest(options, handler);
   }
   @override
   Future onResponse(Response response, ResponseInterceptorHandler handler) async {
-    // TODO: implement onResponse
-
     debugPrint(
       "<-- ${response.statusCode} ${response.requestOptions} ${response.requestOptions.path}");
 
@@ -39,7 +37,6 @@ class LoggingInterceptor extends InterceptorsWrapper {
 
   @override
   Future onError(DioException err, ErrorInterceptorHandler handler) async {
-    // TODO: implement onError
     return super.onError(err, handler);
   }
 }

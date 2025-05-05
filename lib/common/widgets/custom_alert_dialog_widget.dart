@@ -49,7 +49,11 @@ class CustomAlertDialogWidget extends StatelessWidget {
 
           const SizedBox(height: Dimensions.paddingSizeDefault),
 
-          if(title != null) Text(subtitle!, style: rubikRegular.copyWith(fontSize: Dimensions.fontSizeLarge), textAlign: TextAlign.center),
+          if(title != null) Text(title!, style: rubikBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge), textAlign: TextAlign.center),
+
+          const SizedBox(height: Dimensions.paddingSizeDefault),
+
+          if(subtitle != null) Text(subtitle!, style: rubikRegular.copyWith(fontSize: Dimensions.fontSizeLarge), textAlign: TextAlign.center),
 
           const SizedBox(height: 50),
 

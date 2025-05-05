@@ -3,6 +3,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/common/providers/data_sync_provi
 import 'package:ecommerce_app_queen_fruits_v1_0/data/datasource/local/cache_response.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/category/domain/models/category_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/category/domain/repositories/category_repo.dart';
+import 'package:flutter/cupertino.dart';
 
 class CategoryProvider extends DataSyncProvider {
   final CategoryRepo? categoryRepo;
@@ -28,7 +29,7 @@ class CategoryProvider extends DataSyncProvider {
 
       fetchAndSyncData(
           fetchFromLocal: ()=> categoryRepo!.getCategoryList<CacheResponseData>(source: DataSourceEnum.local),
-          fetchFromClient: ()=> categoryRepo!.getCategoryList(source: DataSourceEnum.local),
+          fetchFromClient: ()=> categoryRepo!.getCategoryList(source: DataSourceEnum.client),
           onResponse: (data, _) {
             _categoryList = [];
             data.forEach((category) => _categoryList!.add(CategoryModel.fromJson(category)));

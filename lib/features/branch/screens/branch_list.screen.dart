@@ -11,6 +11,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/features/branch/widgets/branch_s
 import 'package:ecommerce_app_queen_fruits_v1_0/features/cart/providers/cart_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/branch_helper.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/helper/custom_snackbar_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/main.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
@@ -180,8 +181,7 @@ class _BranchListScreenState extends State<BranchListScreen> {
                         )
                       ]),
                     ),
-
-
+                    _BranchSelectButtonWidget(cartProvider: cartProvider)
                   ])
                 )
                ]),
@@ -298,15 +298,37 @@ class _BranchSelectButtonWidget extends StatelessWidget {
         borderRadius: Dimensions.radiusDefault,
         onTap: branchProvider.selectedBranchId == null ? null : () {
           if(branchProvider.selectedBranchId != branchProvider.getBranchId() && cartProvider.cartList.isNotEmpty) {
-              BranchHelper.dialogOrBottomSheet(context,
-                onPressRight: () {
-                  BranchHelper.setBranch(context);
-                  cartProvider.getCartData(context);
+              BranchHelper.dialogOrBottomSheet(
+                  context,
+                  onPressRight: () {
+                    BranchHelper.setBranch(context);
+                    cartProvider.getCartData(context);
                 },
-                title: ""
+                title: "test 1"
               );
           } else {
+              if(branchProvider.getBranchId() == -1) {
+                if(branchProvider.branchTabIndex != 0) {
+                  branchProvider.updateTabIndex(0, isUpdate: false);
+                }
 
+                BranchHelper.setBranch(context);
+                cartProvider.getCartData(context);
+              } else if(branchProvider.selectedBranchId == branchProvider.getBranchId()) {
+                showCustomSnackBarHelper("Ini adalah cabang kamu saat ini");
+              } else {
+                BranchHelper.dialogOrBottomSheet(
+                    context,
+                    onPressRight: () {
+                      if(branchProvider.branchTabIndex != 0) {
+                        branchProvider.updateTabIndex(0, isUpdate: false);
+                      }
+
+                      BranchHelper.setBranch(context);
+                      cartProvider.getCartData(context);
+                    },
+                    title: "Pindah ke cabang ini");
+              }
           }
         },
       ))

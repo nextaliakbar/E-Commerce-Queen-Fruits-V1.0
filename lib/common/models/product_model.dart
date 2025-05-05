@@ -1,6 +1,52 @@
 import 'package:ecommerce_app_queen_fruits_v1_0/main.dart';
 import 'package:flutter/foundation.dart';
 
+class ProductModel {
+  int? totalSize;
+  int? limit;
+  int? offset;
+  double? productMaxPrice;
+  List<Product>? products;
+
+  ProductModel({
+    this.totalSize,
+    this.limit,
+    this.offset,
+    this.products,
+    this.productMaxPrice
+  });
+
+  ProductModel.fromJson(Map<String, dynamic> json) {
+    totalSize = int.tryParse('${json['total_size']}');
+    limit = int.tryParse('${json['limit']}');
+    offset = int.tryParse('${json['offset']}');
+
+    if(json.containsKey('product_max_price')) {
+      productMaxPrice = double.tryParse('${json['product_max_price']}');
+    }
+
+    if(json['products'] != null) {
+      products = [];
+      json['products'].forEach((v) {
+        products!.add(Product.fromJson(v));
+      });
+    }
+
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> data = <String, dynamic>{};
+    data['total_size'] = totalSize;
+    data['limit'] = limit;
+    data['product_max_price'] = productMaxPrice;
+    if(products != null) {
+      data['products'] = products!.map((v) => v.toJson()).toList();
+    }
+
+    return data;
+  }
+}
+
 class Product {
   int? _id;
   String? _name;
@@ -116,6 +162,115 @@ class Product {
 
   String? get changedReason => _changedReason;
 
+  Product.fromJson(Map<String, dynamic> json) {
+    _id = json['id'];
+    _name = json['name'];
+    _description = json['description'];
+    _image = json['image'];
+    _price = json['price'].toDouble();
+
+    if(json['variations'] != null) {
+      _variations = [];
+      json['variations'].forEach((v) {
+        if(!v.containsKey('price')) {
+          _variations!.add(Variation.fromJson(v));
+        }
+      });
+    }
+
+    _tax = json['tax'].toDouble();
+    _availableTimeStarts = json['available_time_starts'] ?? '';
+    _availableTimeEnds = json['available_time_ends'] ?? '';
+    _status = json['status'] ?? 0;
+    _createdAt = json['created_at'];
+    _updatedAt = json['updated_at'];
+
+    if(json['category_ids'] != null) {
+      _categoryIds = [];
+      json['category_ids'].forEach((v) {
+        _categoryIds!.add(CategoryId.fromJson(v));
+      });
+    }
+
+    if(json['choice_options'] != null) {
+      _choiceOptions = [];
+      json['choice_options'].forEach((v) {
+        _choiceOptions!.add(ChoiceOption.fromJson(v));
+      });
+    }
+
+    _discount = double.tryParse(json['discount'].toString());
+    _discountType = json['discount_type'];
+    _taxType = json['tax_type'];
+
+    if(json['rating'] != null) {
+      _rating = [];
+      json['rating'].forEach((v) {
+        _rating!.add(Rating.fromJson(v));
+      });
+    }
+
+    if(json['branch_product'] != null) {
+      _branchProduct = BranchProduct.fromJson(json['branch_product']);
+      _price = branchProduct!.price;
+      _discount = _branchProduct!.price;
+      _discount = _branchProduct!.discount;
+      _discountType = _branchProduct!.discountType;
+    } else {
+      _branchProduct = null;
+    }
+
+    _mainPrice = double.tryParse('${json['price']}');
+
+    if(json.containsKey('is_changed')) {
+      _isChanged = '${json['is_changed']}' .contains('1');
+    }
+
+    if(json.containsKey('change_reason')) {
+      _changedReason = json['change_reason'];
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = _id;
+    data['name'] = _name;
+    data['description'] = _description;
+    data['image'] = _image;
+    data['price'] = _price;
+
+    if(_variations != null) {
+      data['variations'] = _variations!.map((v) => v.toJson()).toList();
+    }
+
+    data['tax'] = _tax;
+    data['available_time_starts'] = _availableTimeStarts;
+    data['available_time_ends'] = _availableTimeEnds;
+    data['status'] = _status;
+    data['created_at'] = _createdAt;
+    data['updated_at'] = _updatedAt;
+
+    if(_categoryIds != null) {
+      data['category_ids'] = _categoryIds!.map((v) => v.toJson()).toList();
+    }
+
+    if(_choiceOptions != null) {
+      data['choice_options'] = _choiceOptions!.map((v) => v.toJson()).toList();
+    }
+
+    data['discount'] = _discount;
+    data['discount_type'] = _discountType;
+    data['tax_type'] = _taxType;
+    data['main_price'] = _mainPrice;
+
+    if(rating != null) {
+      data['rating'] = _rating!.map((v) => v.toJson()).toList();
+    }
+
+    data['branch_product'] = _branchProduct;
+
+    return data;
+  }
 }
 
 class Variation {
@@ -145,6 +300,21 @@ class Variation {
       });
     }
   }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> data = <String, dynamic> {};
+    data['name'] = name;
+    data['type'] = isMultiSelect! ? 'multi' : 'single';
+    data['min'] = min;
+    data['max'] = max;
+    data['required'] = isRequired! ? 'on' : 'off';
+
+    if(variationValues != null) {
+      data['values'] = variationValues!.map((v) => v.toJson()).toList();
+    }
+
+    return data;
+  }
 }
 
 class VariationValue {
@@ -157,6 +327,14 @@ class VariationValue {
     level = json['label'];
     optionPrice = double.parse(json['optionPrice'].toString());
   }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> data = <String, dynamic>{};
+    data['level'] = level;
+    data['optionsPrice'] = optionPrice;
+
+    return data;
+  }
 }
 
 class CategoryId {
@@ -167,6 +345,16 @@ class CategoryId {
   }
 
   String? get id => _id;
+
+  CategoryId.fromJson(Map<String, dynamic> json) {
+    _id = json['id'].toString();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic> {};
+    data['id'] = _id;
+    return data;
+  }
 }
 
 class ChoiceOption {
@@ -183,6 +371,21 @@ class ChoiceOption {
   String? get name => _name;
   String? get title => _title;
   List<String>? get options => _options;
+
+  ChoiceOption.fromJson(Map<String, dynamic> json) {
+    _name = json['name'];
+    _title = json['title'];
+    _options = json['options'].cast<String>();
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> data = <String, dynamic> {};
+    data['name'] = _name;
+    data['title'] = _title;
+    data['options'] = _options;
+
+    return data;
+  }
 }
 
 class Rating {
@@ -196,6 +399,19 @@ class Rating {
 
   double? get avarage => _avarage;
   int? get productId => _productId;
+
+  Rating.fromJson(Map<String, dynamic> json) {
+    _avarage = double.tryParse('${json['average']}');
+    _productId = json['product_id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> data = <String, dynamic>{};
+    data['average'] = _avarage;
+    data['product_id'] = _productId;
+
+    return data;
+  }
 }
 
 class BranchProduct {
@@ -224,4 +440,45 @@ class BranchProduct {
     this.soldQuantity,
     this.stockType
   });
+
+  BranchProduct.fromJson(Map<String, dynamic> json) {
+   id = json['id'];
+   productId = json['product_id'];
+   branchId = json['branch_id'];
+   price = double.tryParse('${json['price']}');
+   isAvailable = ('${json['is_available']}' == '1') || '${json['is_available']}' == 'true';
+
+   if(json['variations'] != null) {
+     variations = [];
+     json['variations'].forEach((v) {
+       if(!v.containsKey('price')) {
+         variations!.add(Variation.fromJson(v));
+       }
+     });
+   }
+
+   discount = json['discount'].toDouble();
+   discountType = json['discount_type'];
+   stockType = json['stock_type'];
+   stock = json['stock'];
+   soldQuantity = json['sold_quantity'];
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> data = <String, dynamic> {};
+    data['id'] = id;
+    data['product_id'] = productId;
+    data['branch_id'] = branchId;
+    data['price'] = price;
+    data['is_available'] = isAvailable;
+    data['variations'] = variations;
+    data['discount'] = discount;
+    data['discount_type'] = discountType;
+    data['stock'] = stock;
+    data['stock_type'] = stockType;
+    data['sold_quantity'] = soldQuantity;
+
+    return data;
+
+  }
 }

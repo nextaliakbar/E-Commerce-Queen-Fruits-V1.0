@@ -12,4 +12,13 @@ class Images {
   static const String placeholderImage = 'assets/image/placeholder_image.png';
   static const String placeholderRectangle = 'assets/image/placeholder_rectangle.png';
   static const String branchBanner = 'assets/image/branch_placeholder_background.png';
+  static const String order = 'assets/image/order.png';
+  static const String forYouSvg = 'assets/svg/for_you.svg';
+  static const String favoriteSvg = 'assets/svg/favorite.svg';
+  static const String cartSvg = 'assets/svg/cart-5.svg';
+  static const String shopSvg = 'assets/svg/shop_svg.svg';
+  static const String menuSvg = 'assets/svg/menu_svg.svg';
+  static const String branchIcon = 'assets/image/branch_icon.png';
+  static const String search = 'assets/icon/search.png';
+  static const String clockSvg = 'assets/svg/clock_svg.svg';
 }
