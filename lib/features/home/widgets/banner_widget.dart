@@ -1,8 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/common/models/cart_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/models/product_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/custom_image_widget.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/features/category/domain/models/category_model.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/features/category/providers/category_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/home/providers/banner_provider.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/features/home/screens/home_item_detail_screen.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash_provider.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/helper/custom_snackbar_helper.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/helper/responsive_helper.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/helper/router_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/images.dart';
@@ -10,6 +17,8 @@ import 'package:ecommerce_app_queen_fruits_v1_0/util/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
+
+import '../../../common/widgets/cart_bottom_sheet_widget.dart';
 
 class BannerWidget extends StatefulWidget {
   const BannerWidget({super.key});
@@ -80,34 +89,33 @@ class _BannerWidgetState extends State<BannerWidget> {
             child: InkWell(
             onTap: () {
             if(bannerProvider.bannerList![index].productId != null) {
-            Product? product;
-
-            for(Product prod in bannerProvider.productList) {
-              if(prod.id == bannerProvider.bannerList![index].productId) {
-                product = prod;
-                break;
+              Product? product;
+              for(Product prod in bannerProvider.productList) {
+                if(prod.id == bannerProvider.bannerList![index].productId) {
+                  product = prod;
+                  break;
+                }
               }
-            }
 
-              // if(product != null) {
-              //   showModalBottomSheet(
-              //     isDismissible: true,
-              //     backgroundColor: Colors.transparent,
-              //     isScrollControlled: true,
-              //     useSafeArea: true,
-              //     context: context,
-              //     builder: (ctx) => CartBottomSheetWidget(
-              //      product: product,
-              //      fromImportProduct: true,
-              //      callback: (CartModel model) {
-              //
-              //      },
-              //     )
-              //   );
-              // }
+              if(product != null) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) =>
+                        HomeItemDetailScreen(product: product)));
+              }
 
             } else if(bannerProvider.bannerList![index].categoryId != null) {
+              CategoryModel? categoryModel;
 
+              for(CategoryModel category in Provider.of<CategoryProvider>(context, listen: false).categoryList!) {
+                if(category.id == bannerProvider.bannerList![index].categoryId) {
+                  categoryModel = category;
+                  break;
+                }
+              }
+
+              if(categoryModel != null) {
+                RouterHelper.getCategoryRoute(categoryModel);
+              }
             }
         },
         borderRadius: BorderRadius.circular(Dimensions.radiusDefault),

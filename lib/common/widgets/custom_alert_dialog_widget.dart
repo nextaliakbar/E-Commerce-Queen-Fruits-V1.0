@@ -17,7 +17,7 @@ class CustomAlertDialogWidget extends StatelessWidget {
     final Widget? child;
     final bool isLoading;
     final bool isSingleButton;
-    final double? widht;
+    final double? width;
     final double? height;
     final bool isPadding;
 
@@ -26,13 +26,13 @@ class CustomAlertDialogWidget extends StatelessWidget {
       this.subtitle, this.leftButtonText, this.rightButtonText,
       this.onPressLeft, this.onPressRight, this.iconColor,
       this.child, this.isLoading = false, this.isSingleButton = false,
-      this.widht, this.height, this.isPadding = true
+      this.width, this.height, this.isPadding = true
     });
 
     @override
   Widget build(BuildContext context) {
     return _CustomerAlertDialogShape(
-      width: widht,
+      width: width,
       height: height,
       isPadding: isPadding,
       child: child ?? Container(

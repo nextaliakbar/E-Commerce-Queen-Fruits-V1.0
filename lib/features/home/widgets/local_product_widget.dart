@@ -4,8 +4,10 @@ import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/custom_slider_lis
 import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/product_shimmer_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/title_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/home/enums/product_group.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/features/home/enums/product_type_enum.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/home/enums/quantity_position.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/home/widgets/product_card_widget.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/helper/router_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +37,9 @@ class LocalProductWidget extends StatelessWidget {
              Padding(padding: EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge), child: TitleWidget(
               title: 'Produk lokal',
               subTitle: 'Lihat semua',
-               onTap: (){},
+               onTap: (){
+                RouterHelper.getHomeItem(productType: ProductType.localProduct);
+               },
              )),
               const SizedBox(height: Dimensions.paddingSizeSmall),
 

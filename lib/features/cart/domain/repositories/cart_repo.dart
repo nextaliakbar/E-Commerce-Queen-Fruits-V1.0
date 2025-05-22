@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/models/cart_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/repositories/data_sync_repo.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/branch/providers/branch_provider.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/main.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/app_constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -28,5 +29,13 @@ class CartRepo {
     }
 
     return cartList;
+  }
+
+  void addToCartList(List<CartModel?> cartProductList) {
+    List<String> carts = [];
+    for(CartModel? cartModel in cartProductList) {
+      carts.add(jsonEncode(cartModel));
+    }
+    sharedPreferences!.setStringList(_getCartDataKey(Get.context!), carts);
   }
 }

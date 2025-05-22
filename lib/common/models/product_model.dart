@@ -199,7 +199,7 @@ class Product {
       });
     }
 
-    _discount = double.tryParse(json['discount'].toString());
+    _discount = json['discount'].toDouble();
     _discountType = json['discount_type'];
     _taxType = json['tax_type'];
 
@@ -271,6 +271,11 @@ class Product {
 
     return data;
   }
+
+  @override
+  String toString() {
+    return 'Product{_id: $_id, _name: $_name, _description: $_description, _image: $_image, _price: $_price, _variations: $_variations, _tax: $_tax, _availableTimeStarts: $_availableTimeStarts, _availableTimeEnds: $_availableTimeEnds, _status: $_status, _createdAt: $_createdAt, _updatedAt: $_updatedAt, _categoryIds: $_categoryIds, _choiceOptions: $_choiceOptions, _discount: $_discount, _discountType: $_discountType, _taxType: $_taxType, _rating: $_rating, _branchProduct: $_branchProduct, _mainPrice: $_mainPrice, _isChanged: $_isChanged, _changedReason: $_changedReason}';
+  }
 }
 
 class Variation {
@@ -315,6 +320,11 @@ class Variation {
 
     return data;
   }
+
+  @override
+  String toString() {
+    return 'Variation{name: $name, min: $min, max: $max, isRequired: $isRequired, isMultiSelect: $isMultiSelect, variationValues: $variationValues}';
+  }
 }
 
 class VariationValue {
@@ -334,6 +344,11 @@ class VariationValue {
     data['optionsPrice'] = optionPrice;
 
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'VariationValue{level: $level, optionPrice: $optionPrice}';
   }
 }
 
@@ -386,31 +401,41 @@ class ChoiceOption {
 
     return data;
   }
+
+  @override
+  String toString() {
+    return 'ChoiceOption{_name: $_name, _title: $_title, _options: $_options}';
+  }
 }
 
 class Rating {
-  double? _avarage;
+  double? _average;
   int? _productId;
 
   Rating({double? avarage, int? productId}) {
-    _avarage = avarage;
+    _average = avarage;
     _productId = productId;
   }
 
-  double? get avarage => _avarage;
+  double? get avarage => _average;
   int? get productId => _productId;
 
   Rating.fromJson(Map<String, dynamic> json) {
-    _avarage = double.tryParse('${json['average']}');
+    _average = double.tryParse('${json['average']}');
     _productId = json['product_id'];
   }
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> data = <String, dynamic>{};
-    data['average'] = _avarage;
+    data['average'] = _average;
     data['product_id'] = _productId;
 
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'Rating{_avarage: $_average, _productId: $_productId}';
   }
 }
 
@@ -480,5 +505,10 @@ class BranchProduct {
 
     return data;
 
+  }
+
+  @override
+  String toString() {
+    return 'BranchProduct{id: $id, productId: $productId, branchId: $branchId, price: $price, isAvailable: $isAvailable, variations: $variations, discount: $discount, discountType: $discountType, stock: $stock, soldQuantity: $soldQuantity, stockType: $stockType}';
   }
 }

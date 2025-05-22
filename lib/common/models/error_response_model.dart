@@ -1,26 +1,26 @@
 class ErrorResponseModel {
-  List<Errors>? _erros;
-  List<Errors>? get errors => _erros;
+  List<Errors>? _errors;
+  List<Errors>? get errors => _errors;
 
   ErrorResponseModel({
-    List<Errors>? erros
+    List<Errors>? errors
   }) {
-    _erros = erros;
+    _errors = errors;
   }
 
   ErrorResponseModel.fromJson(dynamic json) {
     if(json['errors'] != null) {
-      _erros = [];
+      _errors = [];
       json['errors'].forEach((v) {
-          _erros!.add(v);
+          _errors!.add(Errors.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic> {};
-    if(_erros != null) {
-      map['errors'] = _erros!.map((v) => v.toJson()).toList();
+    if(_errors != null) {
+      map['errors'] = _errors!.map((v) => v.toJson()).toList();
     }
 
     return map;

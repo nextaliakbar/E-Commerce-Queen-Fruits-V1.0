@@ -1,6 +1,7 @@
 import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/custom_image_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/category/providers/category_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash_provider.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/helper/router_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/styles.dart';
@@ -51,7 +52,8 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
         physics: const BouncingScrollPhysics(),
         itemCount: totalPage,
         onPageChanged: (index) {
-
+          debugPrint("Click category item 1");
+          widget.categoryProvider.updatedProductCurrentIndex(index, totalPage);
         },
         itemBuilder: (context, index) {
           initialLength = length;
@@ -75,7 +77,10 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
 
               return Column(mainAxisSize: MainAxisSize.min, children: [
                   InkWell(
-                    onTap: (){} ,
+                    onTap: (){
+                      debugPrint("Click category item 2");
+                      RouterHelper.getCategoryRoute(widget.categoryProvider.categoryList![currentIndex0]);
+                    } ,
                     borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
                     child: Container(
                       padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),

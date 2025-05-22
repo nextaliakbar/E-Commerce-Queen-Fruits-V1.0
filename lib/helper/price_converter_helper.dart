@@ -21,9 +21,19 @@ class PriceConverterHelper {
         RegExp(r'(\d{1,3})(?=\d{3})+(?!\d)'), (Match m) => '${m[1]}')}';
   }
 
-  static double? convertDiscount(BuildContext context, double? price, double? discount, String? discountType) {
+  static double? convertWithDiscount(double? price, double? discount, String? discountType) {
     if(discountType == 'amount') {
-      price = discount;
+      price = price! - discount!;
+    } else if(discountType == 'percent') {
+      price = price! - ((discount! / 100) * price);
+    }
+
+    return price;
+  }
+
+  static double? convertDiscount(double? price, double? discount, String? discountType) {
+    if(discountType == 'amount') {
+      price =  discount!;
     } else if(discountType == 'percent') {
       price = (discount! / 100) * price!;
     }

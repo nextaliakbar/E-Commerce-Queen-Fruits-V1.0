@@ -24,11 +24,10 @@ class LoggingInterceptor extends InterceptorsWrapper {
         if(endingIndex > responseAsString.length) {
           endingIndex = responseAsString.length;
         }
-
-        debugPrint(responseAsString.substring(i * maxCharactersPaperLine, endingIndex));
+        // debugPrint(responseAsString.substring(i * maxCharactersPaperLine, endingIndex));
       }
     } else {
-      debugPrint(response.data);
+      // debugPrint(response.data);
     }
 
     debugPrint("<-- END HTTP");

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/models/api_response_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/data/datasource/remote/dio/dio_client.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/data/datasource/remote/exception/api_error_handler.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/features/auth/domain/models/signup_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/app_constant.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -101,5 +102,57 @@ class AuthRepo {
 
   bool isLoggedIn() {
     return sharedPreferences!.containsKey(AppConstants.token);
+  }
+
+  String getUserLogData()=> sharedPreferences!.getString(AppConstants.userLogData) ?? "";
+
+  Future<ApiResponseModel> login({String? userInput, String? password, String? type}) async {
+    try {
+      Response response = await dioClient!.post(
+        AppConstants.loginUri, data: {
+          "email_or_phone":userInput,
+          "password":password,
+          "type":type
+        }
+      );
+      return ApiResponseModel.withSuccess(response);
+    } catch(e) {
+      return ApiResponseModel.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<void> saveUserToken(String token) async {
+    dioClient!.updateHeader(getToken: token);
+
+    try {
+      await sharedPreferences!.setString(AppConstants.token, token);
+    } catch(e) {
+      rethrow;
+    }
+  }
+
+  Future<void> saveUserNumberAndPassword(String userData) async {
+    try {
+      await sharedPreferences!.setString(AppConstants.userLogData, userData);
+    } catch(e) {
+      rethrow;
+    }
+  }
+
+  Future<bool> userClearUserLog() async {
+    return await sharedPreferences!.remove(AppConstants.userLogData);
+  }
+
+  Future<ApiResponseModel> registration(SignUpModel signUpModel) async {
+    try {
+      Response response = await dioClient!.post(
+        AppConstants.registerUri,
+        data: signUpModel.toJson()
+      );
+
+      return ApiResponseModel.withSuccess(response);
+    } catch(e) {
+      return ApiResponseModel.withError(ApiErrorHandler.getMessage(e));
+    }
   }
 }

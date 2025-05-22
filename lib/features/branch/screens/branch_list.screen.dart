@@ -177,7 +177,7 @@ class _BranchListScreenState extends State<BranchListScreen> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: 5,
-                            itemBuilder: (context, index) => BranchSimmerCardWidget(isEnabled: (branchProvider.branchValueList?.isEmpty ?? true))
+                            itemBuilder: (context, index) => BranchShimmerCardWidget(isEnabled: (branchProvider.branchValueList?.isEmpty ?? true))
                         )
                       ]),
                     ),
@@ -304,7 +304,7 @@ class _BranchSelectButtonWidget extends StatelessWidget {
                     BranchHelper.setBranch(context);
                     cartProvider.getCartData(context);
                 },
-                title: "test 1"
+                title: "test 1a"
               );
           } else {
               if(branchProvider.getBranchId() == -1) {

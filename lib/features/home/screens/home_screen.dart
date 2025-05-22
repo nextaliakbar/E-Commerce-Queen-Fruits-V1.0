@@ -1,9 +1,11 @@
 import 'package:ecommerce_app_queen_fruits_v1_0/common/enums/data_source_enum.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/providers/product_provider.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/branch_list_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/custom_asset_image_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/customizable_space_bar_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/paginated_lis_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/sliver_delegate_widget.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/title_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/address/providers/location_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/auth/providers/auth_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/branch/providers/branch_provider.dart';
@@ -13,7 +15,10 @@ import 'package:ecommerce_app_queen_fruits_v1_0/features/category/providers/cate
 import 'package:ecommerce_app_queen_fruits_v1_0/features/home/providers/banner_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/home/widgets/banner_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/home/widgets/category_web_widget.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/features/home/widgets/import_product_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/home/widgets/local_product_widget.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/features/home/widgets/product_view_widget.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/features/home/widgets/recommended_product_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/order/providers/order_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/profile/providers/profile_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/search/providers/search_provider.dart';
@@ -69,9 +74,9 @@ class HomeScreen extends StatefulWidget {
       productProvider.getPopularLocalProductList(1, true, isUpdate: false);
     }
 
-    if(reload) {
-      splashProvider.getPolicyPage();
-    }
+    // if(reload) {
+    //   splashProvider.getPolicyPage();
+    // }
 
     categoryProvider.getCategoryList(reload);
 
@@ -86,8 +91,7 @@ class HomeScreen extends StatefulWidget {
 
     bannerProvider.getBannerList(reload);
     searchProvider.getSearchRecommendedProduct();
-    frequentlyBoughtProvider.getFrequentlyBoughtProduct(1, reload);
-
+    // frequentlyBoughtProvider.getFrequentlyBoughtProduct(1, reload);
   }
 }
 
@@ -165,15 +169,15 @@ class _HomeScreenState extends State<HomeScreen> {
                              Text("Lokasimu saat ini", style: rubikSemiBold.copyWith(color: Colors.white)),
 
                               Row(children: [
-                               // Consumer<LocationProvider>(builder: (context, locationProvider, _) => Text(
-                               //     (locationProvider.currentAddress?.isNotEmpty ?? false)
-                               //         ? (locationProvider.currentAddress!.length > 35 ? '${locationProvider.currentAddress!.substring(0, 35)}...'
-                               //         : locationProvider.currentAddress!) : 'Belum tersedia',
-                               //   style: rubikSemiBold.copyWith(color: Colors.white, fontSize: Dimensions.fontSizeSmall),
-                               //   maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,
-                               // )),
-                                Text("Belum tersedia", style: rubikSemiBold.copyWith(color: Colors.white, fontSize: Dimensions.fontSizeSmall),
-                                    maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center),
+                               Consumer<LocationProvider>(builder: (context, locationProvider, _) => Text(
+                                   (locationProvider.currentAddress?.isNotEmpty ?? false)
+                                       ? (locationProvider.currentAddress!.length > 35 ? '${locationProvider.currentAddress!.substring(0, 35)}...'
+                                       : locationProvider.currentAddress!) : 'Belum tersedia',
+                                 style: rubikSemiBold.copyWith(color: Colors.white, fontSize: Dimensions.fontSizeSmall),
+                                 maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,
+                               )),
+                               //  Text("Belum tersedia", style: rubikSemiBold.copyWith(color: Colors.white, fontSize: Dimensions.fontSizeSmall),
+                               //      maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center),
                                // const SizedBox(width: Dimensions.fontSizeExtraSmall),
                               ])
                             ]),
@@ -211,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         left: Dimensions.paddingSizeSmall, right: Dimensions.paddingSizeSmall,
                         top: Dimensions.paddingSizeExtraSmall, bottom: Dimensions.paddingSizeExtraSmall,
                         child: InkWell(
-                          onTap: () {},
+                          onTap: ()=> RouterHelper.getSearchRoute(),
                           child: Container(
                             margin: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge),
                             height: 50, width: Dimensions.webScreenWidth,
@@ -253,7 +257,41 @@ class _HomeScreenState extends State<HomeScreen> {
                 /// For local product
                 SliverToBoxAdapter(child: Consumer<ProductProvider>(builder: (context, productProvider, _) {
                   return (productProvider.popularLocalProductModel?.products?.isEmpty ?? false) ? const SizedBox() : LocalProductWidget(controller: _localProductScrollController);
-                }))
+                })),
+
+                /// For import product
+                SliverToBoxAdapter(child: Consumer<ProductProvider>(builder: (context, productProvider, _) {
+                  return (productProvider.importProductModel?.products?.isEmpty ?? false) ? const SizedBox() : ImportProductWidget(controller: _importProductScrollController);
+                })),
+
+                /// For list branch
+                SliverToBoxAdapter(child: Consumer<BranchProvider>(builder: (context, branchProvider, _) {
+                  return (branchProvider.branchValueList?.isEmpty ?? false) ? const SizedBox() : Center(child: SizedBox(
+                    width: Dimensions.webScreenWidth,
+                    child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+                        child: BranchListWidget(controller: _branchListScrollController),
+                    ),
+                  ));
+                })),
+
+                /// For recommended product
+                SliverToBoxAdapter(child: Consumer<ProductProvider>(builder: (context, productProvider, _) {
+                  return (productProvider.recommendedProductModel?.products?.isEmpty ?? false) ? const SizedBox() : const RecommendedProductWidget();
+                })),
+
+                if(productProvider.latestProductModel == null || (productProvider.latestProductModel?.products?.isNotEmpty ?? false))
+                  SliverToBoxAdapter(child: Center(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeSmall),
+                      width: Dimensions.webMaxWidth,
+                      child: TitleWidget(
+                        title: 'Semua produk'
+                      ),
+                    ),
+                  )),
+
+                const ProductViewWidget()
 
               ]));
             }

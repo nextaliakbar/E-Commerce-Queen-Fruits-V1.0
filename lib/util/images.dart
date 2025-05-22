@@ -13,12 +13,39 @@ class Images {
   static const String placeholderRectangle = 'assets/image/placeholder_rectangle.png';
   static const String branchBanner = 'assets/image/branch_placeholder_background.png';
   static const String order = 'assets/image/order.png';
+  static const String branchIcon = 'assets/image/branch_icon.png';
+  static const String search = 'assets/icon/search.png';
+  static const String noProductImage = 'assets/image/no_food.png';
+  static const String categoryBanner = 'assets/image/category_banner.png';
+  static const String placeholderUser = 'assets/image/placeholder_user.png';
+  static const String login = 'assets/image/login.png';
+  static const String webAppBarLogo = 'web/assets/logo_store_2.png';
+  static const String marker = 'assets/icon/marker.png';
+  static const String noMapBackground = 'assets/image/no_map_background.png';
+  static const String schedule = 'assets/image/schedule.png';
+  static const String offlinePayment = 'assets/image/offline_payment.png';
+
+  // Svg icon
+  static const String placeholderUserSvg = 'assets/svg/placeholder_user.svg';
+  static const String profileSvg = 'assets/svg/profile.svg';
+  static const String addressSvg = 'assets/svg/address.svg';
+  static const String logoutSvg = 'assets/svg/logout.svg';
   static const String forYouSvg = 'assets/svg/for_you.svg';
   static const String favoriteSvg = 'assets/svg/favorite.svg';
   static const String cartSvg = 'assets/svg/cart-5.svg';
   static const String shopSvg = 'assets/svg/shop_svg.svg';
   static const String menuSvg = 'assets/svg/menu_svg.svg';
-  static const String branchIcon = 'assets/image/branch_icon.png';
-  static const String search = 'assets/icon/search.png';
   static const String clockSvg = 'assets/svg/clock_svg.svg';
+  static const String sortSvg = 'assets/svg/sort_svg.svg';
+  static const noCouponSvg = 'assets/svg/no_coupon_svg.svg';
+  static const String emptyBoxSvg = 'assets/svg/empty_box.svg';
+  static const String emptyCartSvg = 'assets/svg/empty_cart_svg.svg';
+  static const noAddressSvg = 'assets/svg/no_address.svg';
+  static const String closeSvg = 'assets/svg/close_svg.svg';
+  static const String lockSvg = 'assets/svg/lock.svg';
+  static const String profileIconSvg = 'assets/svg/profile_icon.svg';
+  static const String houseSvg = 'assets/svg/house_svg.svg';
+  static const String buildingSvg = 'assets/svg/building_svg.svg';
+  static const String otherSvg = 'assets/svg/buildings_svg.svg';
+  static const String locationPlaceMarkSvg = 'assets/svg/location_placemark_svg.svg';
 }

@@ -60,11 +60,9 @@ class ApiErrorHandler {
               break;
             case DioExceptionType.connectionError:
               errorDescription = "Unavailable to process data ${Get.context!} ${error.response?.statusCode}";
-              debugPrint("Testt 1 errorrr");
               break;
             case DioExceptionType.unknown:
               debugPrint('error --------------- == ${error.response?.requestOptions.path} || ${error.response?.statusCode} ${error.response?.data}');
-              debugPrint("Testt 2 errorrr");
               errorDescription = "Unavailable to process data ${Get.context!}";
               break;
           }

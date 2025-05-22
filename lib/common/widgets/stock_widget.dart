@@ -22,7 +22,7 @@ class StockTagWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ProductProvider productProvider = Provider.of<ProductProvider>(context, listen: false);
-    bool isAvailable = ProductHelper.isProductAvailbale(product: product);
+    bool isAvailable = ProductHelper.isProductAvailable(product: product);
 
     return !productProvider.checkStock(product) || !isAvailable ? Positioned.fill(child: Container(
       padding: const EdgeInsets.symmetric(vertical: 2),

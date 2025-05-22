@@ -31,7 +31,7 @@ class ApiCheckerHelper {
       error = ErrorResponseModel.fromJson(apiResponse);
     } catch(e) {
       if(apiResponse.error is String) {
-        error = ErrorResponseModel(erros: [Errors(code: '', message: apiResponse.error.toString())]);
+        error = ErrorResponseModel(errors: [Errors(code: '', message: apiResponse.error.toString())]);
       } else {
         error = ErrorResponseModel.fromJson(apiResponse.error);
       }

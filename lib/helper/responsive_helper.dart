@@ -43,7 +43,7 @@ class ResponsiveHelper {
       }
     }
 
-    static void showDialogOrBottomShet(BuildContext context, Widget view, {bool isDismissible = true}) {
+    static void showDialogOrBottomSheet(BuildContext context, Widget view, {bool isDismissible = true}) {
       if(ResponsiveHelper.isDesktop(context)) {
         showDialog(context: context, barrierDismissible: isDismissible, builder: (ctx) => Dialog(
           backgroundColor: Colors.transparent,

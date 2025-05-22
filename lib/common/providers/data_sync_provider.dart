@@ -20,7 +20,7 @@ class DataSyncProvider with ChangeNotifier {
       onResponse(jsonDecode(localResponse.response!.response), DataSourceEnum.local);
     }
 
-    // Coba load data dari client and perbarui jika berhasil
+    // Coba load data dari client dan perbarui jika berhasil
     final clientResponse = await fetchFromClient();
     if(clientResponse.isSuccess) {
       onResponse(clientResponse.response?.data, DataSourceEnum.client);

@@ -1,5 +1,6 @@
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/main.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -28,5 +29,19 @@ class DateConverterHelper {
     }
 
     return currentTime.isAfter(startTime) && currentTime.isBefore(endTime);
+  }
+
+  static String convertTimeToTime(String time, BuildContext context) {
+    return DateFormat("HH:mm").format(DateFormat("HH:mm").parse(time));
+  }
+
+  static DateTime convertStringTimeToDate(String time) => DateFormat('HH:mm').parse(time);
+
+  static String dateToTimeOnly(DateTime dateTime, BuildContext context) {
+    return DateFormat("HH:mm").format(dateTime);
+  }
+
+  static String estimatedDate(DateTime dateTime) {
+    return DateFormat('dd MM yyyy').format(dateTime);
   }
 }

@@ -45,7 +45,7 @@ class Pages {
 
     try {
       pages = Pages(
-          status: int.parse(json['status'].toString()) == 1,
+          status: int.parse(json['status'].toString()) == 1 ? true : false,
           content: json['content']);
     } catch(e) {
       pages = null;

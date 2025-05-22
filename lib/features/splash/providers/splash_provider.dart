@@ -4,11 +4,14 @@ import 'package:ecommerce_app_queen_fruits_v1_0/common/enums/data_source_enum.da
 import 'package:ecommerce_app_queen_fruits_v1_0/common/models/api_response_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/models/config_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/models/delivery_info_model.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/common/models/offline_payment_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/models/policy_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/providers/data_sync_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/data/datasource/local/cache_response.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/auth/providers/auth_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/domain/repositories/splash_repo.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/helper/api_checker_helper.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/helper/date_converter_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +25,7 @@ class SplashProvider extends DataSyncProvider {
   ConfigModel? _configModel;
   BaseUrls? _baseUrls;
   final DateTime _currentTime = DateTime.now();
+  List<OfflinePaymentModel?>? _offlinePaymentModelList;
 
   Future<bool> initSharedData() {
     return splashRepo!.initSharedData();
@@ -32,6 +36,7 @@ class SplashProvider extends DataSyncProvider {
   ConfigModel? get configModel => _configModel;
   BaseUrls? get baseUrls => _baseUrls;
   DateTime get currentTime => _currentTime;
+  List<OfflinePaymentModel?>? get offlinePaymentModelList => _offlinePaymentModelList;
 
   Future<void> getPolicyPage() async {
     fetchAndSyncData(
@@ -122,4 +127,66 @@ class SplashProvider extends DataSyncProvider {
   }
 
   bool isBranchSelectDisable ()=> getActiveBranch() != 1;
+
+  Future<void> getOfflinePaymentMethod(bool isReload) async {
+    if(_offlinePaymentModelList == null || isReload) {
+      _offlinePaymentModelList = null;
+    }
+
+    if(_offlinePaymentModelList == null) {
+      ApiResponseModel apiResponse = await splashRepo!.getOfflinePaymentMethod();
+
+      if(apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+        _offlinePaymentModelList = [];
+
+        apiResponse.response?.data.forEach((v) {
+          _offlinePaymentModelList?.add(OfflinePaymentModel.fromJson(v));
+        });
+      } else {
+        ApiCheckerHelper.checkApi(apiResponse);
+      }
+
+      notifyListeners();
+    }
+  }
+
+  bool isStoreOpenNow(BuildContext context) {
+    if(isStoreClosed(true)) return false;
+
+    int weekday = DateTime.now().weekday;
+    if(weekday == 7) {
+      weekday = 0;
+    }
+
+    for(int index = 0; index < _configModel!.storeScheduleTime!.length; index++) {
+      if(weekday.toString() == _configModel!.storeScheduleTime![index].day && DateConverterHelper.isAvailable(
+          _configModel!.storeScheduleTime![index].openingTime!,
+          _configModel!.storeScheduleTime![index].closingTime!)
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  bool isStoreClosed(bool today) {
+    DateTime date = DateTime.now();
+    if(!today) {
+      date = date.add(const Duration(days: 1));
+    }
+
+    int weekday = date.weekday;
+    if(weekday == 7) {
+      weekday = 0;
+    }
+
+    for(int index = 0; index < _configModel!.storeScheduleTime!.length; index++) {
+      if(weekday.toString() == _configModel!.storeScheduleTime![index].day) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 }

@@ -15,8 +15,7 @@ class CustomLoaderWidget extends StatefulWidget {
     this.itemBuilder,
     this.duration = const Duration(milliseconds: 1200),
     this.controller
-  }) : assert(!(itemBuilder is IndexedWidgetBuilder && color is Color)
-      && (itemBuilder == null && color == null), "Tentukan item builder atau warna");
+  }) : assert(!(itemBuilder is IndexedWidgetBuilder && color is Color) && !(itemBuilder == null && color == null), "Tentukan item builder atau warna");
 
   @override
   State<StatefulWidget> createState() {

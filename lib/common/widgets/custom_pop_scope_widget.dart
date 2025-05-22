@@ -9,7 +9,7 @@ class CustomPopScopeWidget extends StatefulWidget {
   final Function()? onPopInvoked;
   final bool isExit;
 
-  const CustomPopScopeWidget({super.key, required this.child, required this.onPopInvoked, this.isExit = true});
+  const CustomPopScopeWidget({super.key, required this.child, this.onPopInvoked, this.isExit = true});
 
   @override
   State<StatefulWidget> createState()=> _CustomPopScoreWidgetState();
@@ -30,7 +30,7 @@ class _CustomPopScoreWidgetState extends State<CustomPopScopeWidget> {
         }
 
         if(!Navigator.canPop(context) && widget.isExit) {
-          ResponsiveHelper.showDialogOrBottomShet(
+          ResponsiveHelper.showDialogOrBottomSheet(
               context, CustomAlertDialogWidget(
             title: "Tutup aplikasi",
             subtitle: "Kamu ingin menutup dan keluar dari aplikasi?",

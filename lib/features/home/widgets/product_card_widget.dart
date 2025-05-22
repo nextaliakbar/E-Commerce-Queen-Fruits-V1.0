@@ -9,6 +9,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/wish_button_widge
 import 'package:ecommerce_app_queen_fruits_v1_0/features/cart/providers/cart_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/home/enums/product_group.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/home/enums/quantity_position.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/features/home/screens/home_item_detail_screen.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/price_converter_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/product_helper.dart';
@@ -42,15 +43,14 @@ class ProductCardWidget extends StatelessWidget {
     final SplashProvider splashProvider = Provider.of<SplashProvider>(context, listen: false);
     final ProductProvider productProvider = Provider.of<ProductProvider>(context, listen: false);
     double? startingPrice = product.price;
-    double? priceDiscount = PriceConverterHelper.convertDiscount(context, product.price, product.discount, product.discountType);
-    bool isAvailable = ProductHelper.isProductAvailbale(product: product);
+    double? priceDiscount = PriceConverterHelper.convertDiscount(product.price, product.discount, product.discountType);
+    bool isAvailable = ProductHelper.isProductAvailable(product: product);
 
     final isCenterAlign = productGroup == ProductGroup.recommendedProduct || productGroup == ProductGroup.branchProduct
     || productGroup == ProductGroup.searchResult || productGroup == ProductGroup.frequentlyBought;
 
     return Consumer<CartProvider>(
       builder: (context, cartProvider, _) {
-        int cartIndex = cartProvider.getCartIndex(product);
         String productImage = '${splashProvider.baseUrls!.productImageUrl}/${product.image}';
         return Container(
           decoration: productGroup == ProductGroup.frequentlyBought ? const BoxDecoration() : BoxDecoration(
@@ -62,21 +62,71 @@ class ProductCardWidget extends StatelessWidget {
           ),
           margin: const EdgeInsets.only(bottom: Dimensions.paddingSizeExtraSmall),
           child: Material(
-            color: Theme.of(context).cardColor.withOpacity(0.3),
+            color: Theme.of(context).cardColor,
             clipBehavior: Clip.hardEdge,
             shape: RoundedRectangleBorder(
               side: BorderSide(color: ColorResources.primaryColor.withOpacity(isShowBorder ? 0.2 : 0)),
               borderRadius: BorderRadius.circular(productGroup == ProductGroup.frequentlyBought ? Dimensions.radiusSmall : Dimensions.radiusLarge)
             ),
             child: InkWell(
-              onTap: (){},
+              onTap: (){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeItemDetailScreen(product: product))
+                );
+              },
               hoverColor: ColorResources.primaryColor.withOpacity(0.03),
               child: Stack(children: [
                 productGroup == ProductGroup.importProduct ? Column(
                   crossAxisAlignment: isCenterAlign ? CrossAxisAlignment.center : CrossAxisAlignment.start,
                   children: [
                     Expanded(child: Stack(children: [
+                      Column(children: [Stack(children: [
+                          _ProductImageWidget(imageHeight: imageHeight, imageWidth: imageWidth, productImage: productImage, productGroup: productGroup),
 
+                          Positioned(
+                            right: Dimensions.paddingSizeSmall,
+                            top: Dimensions.paddingSizeSmall,
+                            left: null,
+                            child: WishButtonWidget(product: product)
+                          ),
+
+                          StockTagWidget(product: product)
+                        ])]),
+
+                      Positioned.fill(left: Dimensions.paddingSizeSmall, right: Dimensions.paddingSizeExtraSmall, child: Align(alignment: Alignment.bottomCenter, child: Stack(children: [
+                        Column(mainAxisSize: MainAxisSize.min, children: [
+                         const SizedBox(height: 35),
+
+                         Container(
+                           transform: Matrix4.translationValues(0, -20, 0),
+                           decoration: BoxDecoration(
+                             color: Theme.of(context).cardColor,
+                             borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
+                             boxShadow: [BoxShadow(
+                               color: Theme.of(context).shadowColor.withOpacity(0.2),
+                               offset: const Offset(0, 5),
+                               blurRadius: 20,
+                               spreadRadius: 10
+                             )]
+                           ),
+                           margin: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+                           child: Column(mainAxisSize: MainAxisSize.min, children: [
+                             _ProductDescriptionWidget(
+                                 product: product,
+                                 priceDiscount: priceDiscount,
+                                 startingPrice: startingPrice,
+                                 productGroup: productGroup)
+                           ]),
+                         )
+                        ]),
+
+                        if(productProvider.checkStock(product) && isAvailable)
+                          Positioned.fill(child: Align(alignment: Alignment.topCenter, child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+                            child: AddToCartButtonWidget(product: product),
+                          )))
+                      ])))
                     ]))
                   ],
                 ) : Stack(children: [
@@ -107,7 +157,7 @@ class ProductCardWidget extends StatelessWidget {
                       : Alignment.bottomRight,
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
-                        child: AddToCartButtonWidget(product: product),
+                        child: AddToCartButtonWidget(product: product)
                       ),
                     ))
                 ]),
@@ -213,7 +263,7 @@ class _ProductDescriptionWidget extends StatelessWidget {
            ) : const SizedBox(),
 
            CustomDirectionalityWidget(child: Text(
-             PriceConverterHelper.convertPrice(startingPrice),
+             PriceConverterHelper.convertPrice(startingPrice, discount: product.discount, discountType: product.discountType),
              style: rubikRegular.copyWith(fontSize: Dimensions.fontSizeSmall)
            ))
           ])),

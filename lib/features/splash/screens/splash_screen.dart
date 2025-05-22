@@ -2,13 +2,13 @@ import 'dart:async';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/enums/data_source_enum.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/models/config_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/custom_asset_image_widget.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/features/auth/providers/auth_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/branch/providers/branch_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/cart/providers/cart_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/custom_snackbar_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/router_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/main.dart';
-import 'package:ecommerce_app_queen_fruits_v1_0/util/app_constant.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/images.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/styles.dart';
@@ -77,15 +77,20 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         splashProvider.getDeliveryInfo(branchProvider.getBranchId());
       }
 
-      if(widget.routeTo != null) {
-        Get.context!.pushReplacement(widget.routeTo!);
+      if(Provider.of<AuthProvider>(Get.context!, listen: false).isLoggedIn()) {
+        Provider.of<AuthProvider>(Get.context!, listen: false).updateToken();
+        RouterHelper.getMainRoute(action: RouteAction.pushNameAndRemoveUntil);
       } else {
-        Future.delayed(const Duration(milliseconds: 10)).then((v) {
-          RouterHelper.getBranchListScreen(action: RouteAction.pushNameAndRemoveUntil);
-          Provider.of<BranchProvider>(Get.context!, listen: false).getBranchId() != -1
-              ? RouterHelper.getMainRoute(action: RouteAction.pushNameAndRemoveUntil)
-              : RouterHelper.getBranchListScreen(action: RouteAction.pushNameAndRemoveUntil);
-        });
+        if(widget.routeTo != null) {
+          Get.context!.pushReplacement(widget.routeTo!);
+        } else {
+          Future.delayed(const Duration(milliseconds: 10)).then((v) {
+            RouterHelper.getBranchListScreen(action: RouteAction.pushNameAndRemoveUntil);
+            Provider.of<BranchProvider>(Get.context!, listen: false).getBranchId() != -1
+                ? RouterHelper.getMainRoute(action: RouteAction.pushNameAndRemoveUntil)
+                : RouterHelper.getBranchListScreen(action: RouteAction.pushNameAndRemoveUntil);
+          });
+        }
       }
     }
   }

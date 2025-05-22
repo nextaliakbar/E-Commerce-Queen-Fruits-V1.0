@@ -10,7 +10,7 @@ class CartModel {
   Product? _product;
   List<List<bool?>>? _variations;
 
-  CartModel({
+  CartModel(
     double? price,
     double? discountedPrice,
     List<Variation>? variation,
@@ -19,7 +19,7 @@ class CartModel {
     double? taxAmount,
     Product? product,
     List<List<bool?>>? variations
-  }) {
+  ) {
     _price = price;
     _discountedPrice = discountedPrice;
     _variation = variation;
@@ -39,6 +39,7 @@ class CartModel {
   double? get discountAmount => _discountAmount;
 
   int? get quantity => _quantity;
+  set quantity(int? qty) => _quantity = qty;
 
   double? get taxAmount => _taxAmount;
 
@@ -55,5 +56,26 @@ class CartModel {
         _variation!.add(Variation.fromJson(v));
       });
     }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['price'] = _price;
+    data['discounted_price'] = _discountedPrice;
+
+    if(variation != null) {
+      data['variation'] = _variation!.map((v) => v.toJson()).toList();
+    }
+    data['discount_amoun'] = _discountAmount;
+    data['quantity'] = _quantity;
+    data['tax_amount'] = _taxAmount;
+    data['product'] = _product!.toJson();
+    data['variations'] = _variations;
+    return data;
+  }
+
+  @override
+  String toString() {
+    return 'CartModel{_price: $_price, _discountedPrice: $_discountedPrice, _variation: $_variation, _discountAmount: $_discountAmount, _quantity: $_quantity, _taxAmount: $_taxAmount, _product: $_product, _variations: $_variations}';
   }
 }

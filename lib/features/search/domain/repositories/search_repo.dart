@@ -24,4 +24,49 @@ class SearchRepo extends DataSyncRepo {
   Future<ApiResponseModel<T>> getSearchRecommendedProduct<T>({required DataSourceEnum source}) async {
     return await fetchData(AppConstants.searchRecommended, source);
   }
+
+  Future<void> saveSearchAddress(String searchAddress) async {
+    try {
+      List<String> searchKeywordList = sharedPreferences!.getStringList(AppConstants.searchAddress) ?? [];
+      if(!searchKeywordList.contains(searchAddress)) {
+        searchKeywordList.add(searchAddress);
+      }
+      await updateSearchData(searchKeywordList);
+    } catch(e) {
+      rethrow;
+    }
+  }
+
+  Future<bool> updateSearchData(List<String> list) async {
+    return sharedPreferences!.setStringList(AppConstants.searchAddress, list);
+  }
+
+  Future<ApiResponseModel> getSearchProductList({
+    required String name,
+    required int offset,
+    String? minPrice,
+    String? maxPrice,
+    List<int>? categoriesId,
+    double? rating,
+    String? productType,
+    String? sortBy
+  }) async {
+    final dynamic data = {
+      if(name.isNotEmpty) 'name':name,
+      if(minPrice != null) 'min_price':minPrice,
+      if(maxPrice != null) 'max_price':maxPrice,
+      if(categoriesId != null && categoriesId.isNotEmpty) 'category_id':categoriesId,
+      if(rating != null) 'rating':rating,
+      if(productType != null) 'product_type':productType,
+      if(sortBy != null) 'sort_by':sortBy
+    };
+
+    try {
+      final dynamic response = await dioClient.post('${AppConstants.searchUri}?limit=10&offset=$offset', data: data);
+
+      return ApiResponseModel.withSuccess(response);
+    } catch(e) {
+      return ApiResponseModel.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
 }

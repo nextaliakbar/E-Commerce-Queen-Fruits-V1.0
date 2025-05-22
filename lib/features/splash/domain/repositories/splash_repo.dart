@@ -1,5 +1,6 @@
 import 'package:ecommerce_app_queen_fruits_v1_0/common/models/api_response_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/repositories/data_sync_repo.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/data/datasource/remote/exception/api_error_handler.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/app_constant.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/enums/data_source_enum.dart';
 
@@ -33,6 +34,15 @@ class SplashRepo extends DataSyncRepo {
 
   Future<ApiResponseModel<T>> getDeliveryInfo<T>(int branchId, {required DataSourceEnum source}) async {
     return await fetchData<T>("${AppConstants.getDeliveryInfo}?branch_id=$branchId", source);
+  }
+
+  Future<ApiResponseModel> getOfflinePaymentMethod() async {
+    try {
+      final response = await dioClient.get(AppConstants.offlinePaymentMethod);
+      return ApiResponseModel.withSuccess(response);
+    } catch(e) {
+      return ApiResponseModel.withError(ApiErrorHandler.getMessage(e));
+    }
   }
 
 }

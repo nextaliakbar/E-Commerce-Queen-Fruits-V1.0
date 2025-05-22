@@ -1,0 +1,3 @@
+enum OrderType {
+  delivery, takeAway
+}

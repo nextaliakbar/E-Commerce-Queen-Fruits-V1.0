@@ -2,10 +2,14 @@ import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/custom_asset_imag
 import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/custom_pop_scope_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/address/providers/location_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/cart/providers/cart_provider.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/features/cart/screens/cart_screen.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/dashboard/widgets/bottom_nav_item_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/home/screens/home_screen.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/features/menu/screens/menu_screen.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/order/providers/order_provider.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/features/order/screens/order_screen.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash_provider.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/helper/custom_snackbar_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/images.dart';
@@ -43,18 +47,23 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
     HomeScreen.loadData(false);
 
-    // locationProvider.checkPermission(()=> locationProvider.getCurrentLocation(context, false).then((currentAddress) {
-    //   locationProvider.onChangeCurrentAddress(currentAddress);
-    // }), canBeIgnoreDialog: true);
+    locationProvider.checkPermission(()=> locationProvider.getCurrentLocation(context, false).then((currentAddress) {
+      locationProvider.onChangeCurrentAddress(currentAddress);
+    }), canBeIgnoreDialog: true);
 
     Provider.of<OrderProvider>(context, listen: false).changeStatus(true);
 
     _pageController = PageController(initialPage: widget.pageIndex);
 
     _screens = [
-      const HomeScreen(false)
+      const HomeScreen(false),
+      const HomeScreen(false),
+      const CartScreen(),
+      const OrderScreen(),
+      MenuScreen(onTap: (int pageIndex) {
+        _setPage(pageIndex);
+      })
     ];
-
   }
 
   @override
@@ -97,18 +106,17 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                       boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 5)]
                     ),
                     child: Stack(children: [
-                      /**
                      Center(
                        heightFactor: 0.2,
                        child: Container(
                          width: 60, height: 60,
                          decoration: BoxDecoration(
-                           border: Border.all(color: ColorResources.primaryColor, width: 5),
+                           border: Border.all(color: Colors.white, width: 5),
                            borderRadius: BorderRadius.circular(30),
                            boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 2, offset: const Offset(0, -2), spreadRadius: 0)]
                          ),
                          child: FloatingActionButton(
-                             shape: const CircleBorder(),
+                           shape: const CircleBorder(),
                            backgroundColor: ColorResources.primaryColor,
                            onPressed: () {
                                _setPage(2);
@@ -117,7 +125,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                            child: Consumer<CartProvider>(builder: (context, cartProvider, _) {
                              return Stack(
                                children: [
-                                 const CustomAssetImageWidget(Images.order, color: Colors.white, height: 30),
+                                 const CustomAssetImageWidget(Images.cartSvg, color: Colors.white, height: 30),
 
                                  if(cartProvider.cartList.isNotEmpty) Positioned(top: -4, right: 0, child: Container(
                                    alignment: Alignment.center,
@@ -136,7 +144,6 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                          ),
                        ),
                      ),
-                          */
 
                       Center(
                         child: SizedBox(
@@ -153,17 +160,20 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                               title: "Favorit",
                               imageIcon: Images.favoriteSvg,
                               isSelected: _pageIndex == 1,
-                              onTap: ()=> _setPage(1),
+                              onTap: () {
+                                _setPage(1);
+                                showCustomSnackBarHelper("Fitur sedang tahap pengembangan");
+                              },
                             ),
 
-                            BottomNavItemWidget(
-                              title: "Keranjang",
-                              imageIcon: Images.cartSvg,
-                              isSelected: _pageIndex == 2,
-                              onTap: ()=> _setPage(2),
-                            ),
+                            // BottomNavItemWidget(
+                            //   title: "Keranjang",
+                            //   imageIcon: Images.cartSvg,
+                            //   isSelected: _pageIndex == 2,
+                            //   onTap: ()=> _setPage(2),
+                            // ),
 
-                            // Container(width: size.width * 0.2),
+                            Container(width: size.width * 0.2),
 
                             BottomNavItemWidget(
                               title: "Pesanan",

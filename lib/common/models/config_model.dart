@@ -152,8 +152,8 @@ class ConfigModel {
     _aboutUs = json['about_us'];
     _selfPickup = json['self_pickup'];
     _homeDelivery = json['delivery'];
-    _storeLocationCoverage = json['restaurant_location_coverage'] != null
-        ? StoreLocationCoverage.fromJson(json['restaurant_location_coverage']) : null;
+    _storeLocationCoverage = json['store_location_coverage'] != null
+        ? StoreLocationCoverage.fromJson(json['store_location_coverage']) : null;
     _minimumOrderValue = json['minimum_order_value'] != null ? json['minimum_order_value'].toDouble() : 0;
     if (json['branches'] != null) {
       _branches = [];
@@ -171,7 +171,7 @@ class ConfigModel {
         ? AppStoreConfig.fromJson(json['app_store_config'])
         : null;
 
-    _storeScheduleTime = List<StoreScheduleTime>.from(json["restaurant_schedule_time"].map((x) => StoreScheduleTime.fromJson(x)));
+    _storeScheduleTime = List<StoreScheduleTime>.from(json["store_schedule_time"].map((x) => StoreScheduleTime.fromJson(x)));
 
     try {
       _scheduleOrderSlotDuration = json['schedule_order_slot_duration'] ?? 30;
@@ -194,7 +194,9 @@ class ConfigModel {
     }
 
     _isOfflinePayment = json['offline_payment'] == 'true';
-    _appleLogin = AppleLogin.fromJson(json['apple_login']);
+    if(json['apple_login'] != null) {
+      _appleLogin = AppleLogin.fromJson(json['apple_login']);
+    }
     _googleMapStatus = json['google_map_status'];
   }
 
@@ -204,7 +206,7 @@ class ConfigModel {
     data['store_logo'] = _storeLogo;
     data['store_address'] = _storeAddress;
     data['store_phone'] = _storePhone;
-    data['restaurant_email'] = _storeEmail;
+    data['store_email'] = _storeEmail;
     if (_baseUrls != null) {
       data['base_urls'] = _baseUrls!.toJson();
     }
@@ -214,7 +216,7 @@ class ConfigModel {
     data['self_pickup'] = selfPickup;
     data['delivery'] = homeDelivery;
     if (_storeLocationCoverage != null) {
-      data['restaurant_location_coverage'] = _storeLocationCoverage!.toJson();
+      data['store_location_coverage'] = _storeLocationCoverage!.toJson();
     }
     data['minimum_order_value'] = _minimumOrderValue;
     if (_branches != null) {
@@ -317,7 +319,7 @@ class BaseUrls {
     data['category_image_url'] = _categoryImageUrl;
     data['review_image_url'] = _reviewImageUrl;
     data['notification_image_url'] = _notificationImageUrl;
-    data['restaurant_image_url'] = _storeImageUrl;
+    data['store_image_url'] = _storeImageUrl;
     data['delivery_man_image_url'] = _deliveryManImageUrl;
     data['branch_image_url'] = _branchImageUrl;
     return data;

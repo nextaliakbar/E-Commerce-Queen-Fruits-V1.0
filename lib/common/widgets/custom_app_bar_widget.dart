@@ -42,7 +42,7 @@ class CustomAppBarWidget extends StatelessWidget implements PreferredSizeWidget 
       leading: isBackButtonExist ? IconButton(
         icon: leading ?? const Icon(Icons.arrow_back_ios, color: ColorResources.primaryColor),
         color: titleColor ?? (isTransparent ? Theme.of(context).cardColor : ColorResources.primaryColor),
-        onPressed: ()=> onBackPressed != null ? onBackPressed!() : context.pop,
+        onPressed: ()=> onBackPressed != null ? onBackPressed!() : context.pop(),
       ) : const SizedBox(),
       actions: actionView != null ? [
         Padding(
@@ -56,6 +56,5 @@ class CustomAppBarWidget extends StatelessWidget implements PreferredSizeWidget 
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => Size(double.maxFinite, 50);
 }
