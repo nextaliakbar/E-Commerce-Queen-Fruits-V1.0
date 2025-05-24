@@ -115,7 +115,6 @@ class _SearchScreenState extends State<SearchScreen> {
                     //   );
                     // }
 
-                    showCustomSnackBarHelper("Fitur sedang tahap pengembangan");
                   },
                   // onChanged: (String text) => debounce.run(() {
                   //   if(text.isNotEmpty) {

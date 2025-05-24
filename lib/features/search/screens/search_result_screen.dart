@@ -43,8 +43,8 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
       categoryProvider.getCategoryList(true);
     }
 
-    searchProvider.saveSearchAddress(_searchController.text);
-    searchProvider.searchProduct(offset: 1, name: _searchController.text, context: context, isUpdate: false);
+    // searchProvider.saveSearchAddress(_searchController.text);
+    // searchProvider.searchProduct(offset: 1, name: _searchController.text, context: context, isUpdate: false);
   }
 
   @override

@@ -43,7 +43,7 @@ class AuthProvider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    bool isSucees = await authRepo!.clearSharedData();
+    bool isSuccess = await authRepo!.clearSharedData();
     await authRepo?.dioClient?.updateHeader(getToken: null);
 
     if(context.mounted) {
@@ -52,7 +52,7 @@ class AuthProvider extends ChangeNotifier {
 
     _isLoading = false;
     notifyListeners();
-    return isSucees;
+    return isSuccess;
   }
 
   bool isLoggedIn() {
@@ -63,7 +63,7 @@ class AuthProvider extends ChangeNotifier {
     if(await authRepo!.getDeviceToken() != '@') {
       debugPrint('------------ (update device token) -------- from update');
 
-      await authRepo!.updateDeviceToken();
+      // await authRepo!.updateDeviceToken();
     }
   }
 
@@ -139,7 +139,7 @@ class AuthProvider extends ChangeNotifier {
 
     debugPrint("--------(update device token)------- from _updateAuthToken");
 
-    await authRepo!.updateDeviceToken();
+    // await authRepo!.updateDeviceToken();
   }
 
   void saveUserNumberAndPassword(UserLogData userLogData) {

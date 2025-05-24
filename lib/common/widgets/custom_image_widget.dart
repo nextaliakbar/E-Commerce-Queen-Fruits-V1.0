@@ -23,7 +23,11 @@ class CustomImageWidget extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: image, height: height, width: width, fit: fit,
       placeholder: (context, url) => Image.asset(placeholder.isNotEmpty ? placeholder : Images.placeholderImage, height: height, width: width, fit: fit),
-      errorWidget: (context, url, error) => Image.asset(placeholder.isNotEmpty ? placeholder : Images.placeholderImage, height: height, width: width, fit: fit),
+      // errorWidget: (context, url, error) => Image.asset(placeholder.isNotEmpty ? placeholder : Images.placeholderImage, height: height, width: width, fit: fit),
+      errorWidget: (context, url, error) {
+        // debugPrint("Error loading image: $error from $image");
+        return Image.asset(placeholder.isNotEmpty ? placeholder : Images.placeholderImage, height: height, width: width, fit: fit);
+      },
     );
   }
 }

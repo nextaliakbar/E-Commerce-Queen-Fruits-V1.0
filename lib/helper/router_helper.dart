@@ -16,6 +16,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/features/dashboard/screens/dashb
 import 'package:ecommerce_app_queen_fruits_v1_0/features/home/enums/product_type_enum.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/home/screens/home_item_screen.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/onboarding/screens/onboarding_screen.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/features/order/screens/order_details_screen.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/page_not_found/screens/page_not_found_screen.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/search/screens/search_result_screen.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/search/screens/search_screen.dart';
@@ -86,7 +87,6 @@ class RouterHelper {
   }
 
   static String getOrderSuccessScreen(String orderId, String statusMessage) => _navigateRoute('$orderSuccessScreen?order_id=$orderId&status=$statusMessage', route: RouteAction.pushReplacement);
-
   static String _navigateRoute(String path, {RouteAction? route = RouteAction.push}) {
     if(route == RouteAction.pushNameAndRemoveUntil) {
       Get.context?.go(path);
@@ -177,8 +177,12 @@ class RouterHelper {
               ? 2 : 3 ;
 
           return _routeHandler(context, path: _getPath(state), OrderSuccessfulScreen(orderId: orderId, status: status), isBranchCheck: true);
-        })
-        // GoRoute(path: paymentScreen, builder: (context, state) => _routeHandler(context, path: _getPath(state), PaymentScreen(), isBranchCheck: true))
+        }),
+        GoRoute(path: orderDetailScreen, builder: (context, state) => _routeHandler(context, path: _getPath(state), OrderDetailsScreen(
+          orderModel: null, orderId: int.parse(state.uri.queryParameters['id'] ?? ''),
+          phoneNumber: '${state.uri.queryParameters['phone']}' != 'null' && '${state.uri.queryParameters['phone']}' != ''
+              ?'${state.uri.queryParameters['phone']}' : null,
+        ))),
       ]
   );
 }

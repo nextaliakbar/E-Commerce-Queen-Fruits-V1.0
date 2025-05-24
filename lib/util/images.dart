@@ -24,6 +24,16 @@ class Images {
   static const String noMapBackground = 'assets/image/no_map_background.png';
   static const String schedule = 'assets/image/schedule.png';
   static const String offlinePayment = 'assets/image/offline_payment.png';
+  static const String callIcon = 'assets/image/call_icon.png';
+  static const String payment = 'assets/image/payment.png';
+
+  // Gif Animation
+  static const String pendingAnimation = 'assets/image/pending_animation.gif';
+  static const String processingAnimation = 'assets/image/processing_animation.gif';
+  static const String outForDeliveryAnimation = 'assets/image/out_for_delivery_animation.gif';
+  static const String confirmedDeliveryAnimation = 'assets/image/confirmed_delivery.gif';
+  static const String canceledDeliveryAnimation = 'assets/image/canceled_delivery.gif';
+  static const String failedDeliveryAnimation = 'assets/image/failed_delivery.gif';
 
   // Svg icon
   static const String placeholderUserSvg = 'assets/svg/placeholder_user.svg';
@@ -48,4 +58,5 @@ class Images {
   static const String buildingSvg = 'assets/svg/building_svg.svg';
   static const String otherSvg = 'assets/svg/buildings_svg.svg';
   static const String locationPlaceMarkSvg = 'assets/svg/location_placemark_svg.svg';
+  static const String storeLocationSvg = 'assets/svg/restaurant_location_svg.svg';
 }

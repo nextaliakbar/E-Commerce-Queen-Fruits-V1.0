@@ -45,4 +45,52 @@ class OrderRepo {
       return ApiResponseModel.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
+  Future<ApiResponseModel> trackOrderWithPhoneNumber(String? orderId, String phoneNumber) async {
+    try {
+      final response = await dioClient!.post(AppConstants.trackOrderWithPhoneNumber, data: {
+        'order_id' : orderId,
+        'phone':phoneNumber
+      });
+      return ApiResponseModel.withSuccess(response);
+    } catch(e) {
+      debugPrint("Error post track order with phone number");
+      return ApiResponseModel.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponseModel> trackOrder(String? orderId, {String? phoneNumber}) async {
+    try {
+      debugPrint("URI : ${AppConstants.trackUri}$orderId");
+      final response = await dioClient!.get('${AppConstants.trackUri}$orderId');
+      return ApiResponseModel.withSuccess(response);
+    } catch(e) {
+      debugPrint("Error get track order without phone number");
+      return ApiResponseModel.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponseModel> getOrderDetailsWithPhoneNumber(String? orderId, String phoneNumber) async {
+    try {
+      final response = await dioClient!.post(AppConstants.orderDetailsWithPhoneNumber, data: {
+        'order_id':orderId,
+        'phone':phoneNumber
+      });
+      return ApiResponseModel.withSuccess(response);
+    } catch(e) {
+      debugPrint("Error post order detail with phone number");
+      return ApiResponseModel.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponseModel> getOrderDetails(String orderId) async {
+    try {
+      debugPrint("URI : ${AppConstants.orderDetailsUri}$orderId");
+      final response = await dioClient!.get('${AppConstants.orderDetailsUri}$orderId');
+      return ApiResponseModel.withSuccess(response);
+    } catch(e) {
+      debugPrint("Error get order detail without phone number");
+      return ApiResponseModel.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
 }

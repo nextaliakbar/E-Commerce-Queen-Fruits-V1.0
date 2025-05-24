@@ -23,6 +23,8 @@ class ApiCheckerHelper {
       error.errors?.first.message?.replaceAll('_', ' ').toCapitalized()
           : error.errors!.first.message);
     }
+
+    debugPrint("Error checker helper: ${error.errors?.first.message}");
   }
 
   static ErrorResponseModel getError(ApiResponseModel apiResponse) {

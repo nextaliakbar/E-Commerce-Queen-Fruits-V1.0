@@ -52,9 +52,9 @@ class CategoryModel {
   CategoryModel.fromJson(Map<String, dynamic> json) {
     _id = json['id'] ?? 0;
     _name = json['name'] ?? '';
-    _parentId = json['parent_id'] ?? 0;
-    _position = json['position'] ?? 0;
-    _status = json['status'] ?? 0;
+    _parentId = int.tryParse(json['parent_id'].toString()) ?? 0;
+    _position = int.tryParse(json['position'].toString()) ?? 0;
+    _status = int.tryParse(json['status'].toString()) ?? 0;
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
     _image = json['image'] ?? '';

@@ -61,7 +61,7 @@ class PaymentMethodView extends StatelessWidget {
                   const SizedBox(width: Dimensions.paddingSizeSmall),
 
                   Text(
-                    isOffline ? "Bayar Offline" : paymentList[index].getWayTitle ?? '',
+                    isOffline ? "Lihat Metode Pembayaran" : paymentList[index].getWayTitle ?? '',
                     style: rubikSemiBold.copyWith(fontSize: Dimensions.fontSizeDefault),
                   ),
                 ]),

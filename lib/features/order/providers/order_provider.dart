@@ -1,5 +1,7 @@
 import 'package:ecommerce_app_queen_fruits_v1_0/common/models/api_response_model.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/common/models/order_details_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/models/place_order_body.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/common/models/response_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/order/domain/models/order_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/order/domain/repositories/order_repo.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/api_checker_helper.dart';
@@ -18,11 +20,19 @@ class OrderProvider extends ChangeNotifier {
   bool _isLoading = false;
   List<OrderModel>? _runningOrderList;
   List<OrderModel>? _historyOrderList;
+  OrderModel? _trackModel;
+  ResponseModel? _responseModel;
+  bool _showCanceled = false;
+  List<OrderDetailsModel>? _orderDetails;
 
   bool get isStoreCloseNow => _isStoreCloseNow;
   bool get isLoading => _isLoading;
   List<OrderModel>? get runningOrderList => _runningOrderList;
   List<OrderModel>? get historyOrderList => _historyOrderList;
+  OrderModel? get trackModel => _trackModel;
+  ResponseModel? get responseModel => _responseModel;
+  bool get showCanceled => _showCanceled;
+  List<OrderDetailsModel>? get orderDetails => _orderDetails;
 
   void changeStatus(bool status, {bool notify = false}) {
     _isStoreCloseNow = status;
@@ -90,5 +100,75 @@ class OrderProvider extends ChangeNotifier {
 
     debugPrint("Running order list length ${_runningOrderList?.length}");
     notifyListeners();
+  }
+
+  Future<ResponseModel?> trackOrder(String? orderId, {String? phoneNumber, bool isUpdate = false, OrderModel? orderModel, bool fromTracking = true}) async {
+    _trackModel = null;
+    _responseModel = null;
+
+    if(!fromTracking) {
+      _orderDetails = null;
+    }
+
+    _showCanceled = false;
+    if(orderModel == null) {
+      _isLoading = true;
+      if(isUpdate) {
+        notifyListeners();
+      }
+
+      ApiResponseModel apiResponse;
+
+      if(phoneNumber != null) {
+        apiResponse = await orderRepo!.trackOrderWithPhoneNumber(orderId, phoneNumber);
+      } else {
+        apiResponse = await orderRepo!.trackOrder(orderId);
+      }
+
+      if(apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+        _trackModel = OrderModel.fromJson(apiResponse.response!.data);
+        _responseModel = ResponseModel(true, apiResponse.response!.data.toString());
+      } else {
+        _trackModel = OrderModel(id: -1);
+        _responseModel = ResponseModel(false, ApiCheckerHelper.getError(apiResponse).errors![0].message);
+        ApiCheckerHelper.checkApi(apiResponse);
+      }
+    } else {
+      _trackModel = orderModel;
+      _responseModel = ResponseModel(true, 'Successful');
+    }
+
+    _isLoading = false;
+    notifyListeners();
+    return _responseModel;
+  }
+
+  Future<List<OrderDetailsModel>?> getOrderDetails(String orderId, {String? phoneNumber, bool isApiCheck = true}) async {
+    _orderDetails = null;
+    _isLoading = false;
+    _showCanceled = false;
+
+    ApiResponseModel apiResponse;
+
+    if(phoneNumber != null) {
+      apiResponse = await orderRepo!.getOrderDetailsWithPhoneNumber(orderId, phoneNumber);
+    } else {
+      apiResponse = await orderRepo!.getOrderDetails(orderId);
+    }
+
+    if(apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+      _orderDetails = [];
+      apiResponse.response!.data.forEach((orderDetail) => _orderDetails!.add(OrderDetailsModel.fromJson(orderDetail)));
+    } else {
+      _orderDetails = [];
+    }
+
+    if(!isApiCheck) {
+      ApiCheckerHelper.checkApi(apiResponse);
+    }
+
+    _isLoading = false;
+    notifyListeners();
+    return _orderDetails;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:ecommerce_app_queen_fruits_v1_0/common/models/product_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/cart/providers/cart_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/home/screens/home_item_detail_screen.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/helper/custom_snackbar_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/styles.dart';
@@ -55,7 +56,7 @@ class AddToCartButtonWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraSmall, vertical: Dimensions.paddingSizeExtraSmall),
             child: Row(mainAxisSize: MainAxisSize.min, children: [
               InkWell(
-                onTap: (){},
+                onTap: ()=> showCustomSnackBarHelper("Fitur dalam tahap pengembangan"),
                 child: Container(
                   padding: const EdgeInsets.all(2),
                   decoration: const BoxDecoration(
@@ -72,7 +73,7 @@ class AddToCartButtonWidget extends StatelessWidget {
               ),
 
               InkWell(
-                onTap: (){},
+                onTap: ()=> showCustomSnackBarHelper("Fitur dalam tahap pengembangan"),
                 child: Container(
                   padding: const EdgeInsets.all(2),
                   decoration: const BoxDecoration(

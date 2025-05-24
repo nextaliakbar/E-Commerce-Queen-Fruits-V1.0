@@ -1,15 +1,16 @@
 class AppConstants {
   static const String appName = 'Queen Fruits';
   static const String baseUrl = 'http://localhost:8000';
+  // static const String baseUrl = 'https://queenfruits.mitrajamur.com';
   static const String policyPage = '/api/v1/pages'; // incoming
   static const String tokenUri = '/api/customer/cm-firebase-token'; // incoming
-  static const String subscribeToTopic = '/api/v1/fcm-subscribe-to-topic';
+  static const String subscribeToTopic = '/api/v1/fcm-subscribe-to-topic'; // incoming
   static const String customerInfoUri = '/api/v1/customer/info'; // completed
   static const String categoryUri = '/api/v1/categories'; // completed
   static const String getDeliveryInfo = '/api/v1/config/delivery-fee'; // completed
   static const String configUri = '/api/v1/config'; // completed
   static const String searchSuggestion = '/api/v1/products/search-suggestion';
-  static const String wishListGetUri = '/api/v1/customer/wish-list';
+  static const String wishListGetUri = '/api/v1/customer/wish-list'; // incoming
   static const String latestProductUri = '/api/v1/products/latest'; // completed
   static const String popularProductUri = '/api/v1/products/popular'; // completed
   static const String importProductUri = '/api/v1/products/import-product'; // completed
@@ -30,7 +31,10 @@ class AppConstants {
   static const String distanceMatrixUri = '/api/v1/mapapi/distance-api'; // completed
   static const String placeOrderUri = '/api/v1/customer/order/place'; // completed with bug in server
   static const String orderListUri = '/api/v1/customer/order/list'; // completed
-  static const String orderDetailsUri = '/api/v1/customer/order/details?order_id=';
+  static const String orderDetailsUri = '/api/v1/customer/order/details-without-phone?order_id='; // completed
+  static const String trackUri = '/api/v1/customer/order/track-without-phone?order_id='; // completed
+  static const String orderDetailsWithPhoneNumber = '/api/v1/customer/order/details-with-phone'; // completed
+  static const String trackOrderWithPhoneNumber = '/api/v1/customer/order/track-with-phone'; // completed
 
   // Shared key
   static const String token = "token";

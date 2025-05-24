@@ -52,6 +52,7 @@ class ProductCardWidget extends StatelessWidget {
     return Consumer<CartProvider>(
       builder: (context, cartProvider, _) {
         String productImage = '${splashProvider.baseUrls!.productImageUrl}/${product.image}';
+        // String productImage = 'https://queenfruits.mitrajamur.com/storage/product/2025-05-24-683135ebb3b25.jpg';
         return Container(
           decoration: productGroup == ProductGroup.frequentlyBought ? const BoxDecoration() : BoxDecoration(
             boxShadow: [BoxShadow(

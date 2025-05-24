@@ -126,13 +126,14 @@ class OrderModel {
   bool? get isProductAvailable => _isProductAvailable;
   List<String>? get productImageList => _productImageList;
   Branches? get branches => _branches;
+  OfflinePaymentInformation? get offlinePaymentInformation => _offlinePaymentInformation;
 
   OrderModel.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _userId = json['user_id'];
     _orderAmount = json['order_amount'].toDouble();
     _couponDiscountAmount = json['coupon_discount_amount'] != null
-        ? json['coupon_discount_amount'].toDouble() : json['coupon_discount_amount'];
+        ? double.tryParse(json['coupon_discount_amount'].toString()) : json['coupon_discount_amount'];
     _couponDiscountTitle = json['coupon_discount_title'];
     _paymentStatus = json['payment_status'];
     _orderStatus = json['order_status'] == 'cooking' ||

@@ -4,6 +4,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/features/auth/providers/auth_pro
 import 'package:ecommerce_app_queen_fruits_v1_0/features/menu/widgets/card_button_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/menu/widgets/portion_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash_provider.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/helper/custom_snackbar_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/responsive_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/router_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
@@ -46,7 +47,7 @@ class OptionsWidget extends StatelessWidget {
              padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault),
              margin: const EdgeInsets.all(Dimensions.paddingSizeDefault),
              child: Column(children: [
-               PortionWidget(imageIcon: Images.profileSvg, title: "Profil"),
+               PortionWidget(imageIcon: Images.profileSvg, title: "Profil", onRoute: ()=> showCustomSnackBarHelper("Fitur dalam tahap pengembangan")),
                PortionWidget(imageIcon: Images.addressSvg, title: "Alamat", onRoute: ()=> RouterHelper.getAddressRoute()),
 
                isLoggedIn ? PortionWidget(
@@ -54,7 +55,7 @@ class OptionsWidget extends StatelessWidget {
                  icon: Icons.delete,
                  imageIcon: null,
                  title: "Hapus akun",
-                 onRoute: (){},
+                 onRoute: ()=> showCustomSnackBarHelper("Fitur dalam tahap pengembangan"),
                ) : const SizedBox(),
 
                InkWell(onTap: (){

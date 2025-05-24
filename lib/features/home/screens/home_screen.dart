@@ -24,6 +24,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/features/profile/providers/profi
 import 'package:ecommerce_app_queen_fruits_v1_0/features/search/providers/search_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/wishlist/providers/wishlist_provider.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/helper/custom_snackbar_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/router_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/main.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
@@ -63,7 +64,7 @@ class HomeScreen extends StatefulWidget {
       profileProvider.setUserInfoModel = null;
     }
 
-    wishlistProvider.initWishList();
+    // wishlistProvider.initWishList();
 
     if(productProvider.latestProductModel == null || reload) {
       productProvider.getLatestProductList(1, reload);
@@ -215,7 +216,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         left: Dimensions.paddingSizeSmall, right: Dimensions.paddingSizeSmall,
                         top: Dimensions.paddingSizeExtraSmall, bottom: Dimensions.paddingSizeExtraSmall,
                         child: InkWell(
-                          onTap: ()=> RouterHelper.getSearchRoute(),
+                          // onTap: ()=> RouterHelper.getSearchRoute(),
+                          onTap: ()=> showCustomSnackBarHelper("Fitur dalam tahap pengembangan"),
                           child: Container(
                             margin: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge),
                             height: 50, width: Dimensions.webScreenWidth,

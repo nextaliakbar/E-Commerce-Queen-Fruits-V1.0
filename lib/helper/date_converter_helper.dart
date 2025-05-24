@@ -44,4 +44,13 @@ class DateConverterHelper {
   static String estimatedDate(DateTime dateTime) {
     return DateFormat('dd MM yyyy').format(dateTime);
   }
+
+  static String formatDate(DateTime? dateTime, BuildContext context, {bool isSecond = true}) {
+      return isSecond ? DateFormat('yyyy-MM-dd ${'HH:mm:ss'}').format(dateTime!)
+          : DateFormat('yyyy-MM-dd ${'HH:mm'}').format(dateTime!);
+  }
+
+  static DateTime isoStringToLocalDate(String dateTime, {String? format}) {
+    return DateFormat(format ?? 'yyyy-MM-ddTHH:mm:ss.SSS').parse(dateTime, true).toLocal();
+  }
 }

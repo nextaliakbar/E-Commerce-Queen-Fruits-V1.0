@@ -84,14 +84,14 @@ class _PaymentMethodBottomSheetWidgetState extends State<PaymentMethodBottomShee
                   const SizedBox(height: Dimensions.paddingSizeDefault),
 
                   if(paymentList.isNotEmpty) Row(children: [
-                    Text("Bayar via online", style: rubikBold.copyWith(fontSize: Dimensions.fontSizeDefault)),
+                    Text("Pembayaran", style: rubikBold.copyWith(fontSize: Dimensions.fontSizeDefault)),
                     const SizedBox(width: Dimensions.paddingSizeExtraSmall),
 
-                    Expanded(
-                      child: Text('Cara yang lebih cepat dan aman untuk pembayaran', style: robotoRegular.copyWith(
-                        fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).hintColor,
-                      )),
-                    ),
+                    // Expanded(
+                    //   child: Text('Cara yang lebih cepat dan aman untuk pembayaran', style: robotoRegular.copyWith(
+                    //     fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).hintColor,
+                    //   )),
+                    // ),
 
                   ]),
                   const SizedBox(height: Dimensions.paddingSizeLarge),

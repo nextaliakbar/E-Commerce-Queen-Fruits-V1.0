@@ -162,7 +162,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                               isSelected: _pageIndex == 1,
                               onTap: () {
                                 _setPage(1);
-                                showCustomSnackBarHelper("Fitur sedang tahap pengembangan");
+                                showCustomSnackBarHelper("Fitur dalam tahap pengembangan");
                               },
                             ),
 

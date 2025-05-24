@@ -43,6 +43,7 @@ class CategoryProvider extends DataSyncProvider {
           fetchFromLocal: ()=> categoryRepo!.getCategoryList<CacheResponseData>(source: DataSourceEnum.local),
           fetchFromClient: ()=> categoryRepo!.getCategoryList(source: DataSourceEnum.client),
           onResponse: (data, _) {
+            debugPrint("Data categories ${data.toString()}");
             _categoryList = [];
             data.forEach((category) => _categoryList!.add(CategoryModel.fromJson(category)));
 

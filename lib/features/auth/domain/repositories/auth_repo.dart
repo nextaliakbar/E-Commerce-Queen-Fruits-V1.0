@@ -20,21 +20,21 @@ class AuthRepo {
       await FirebaseMessaging.instance.unsubscribeFromTopic(AppConstants.topic));
     }
 
-    try {
-      await dioClient!.post(
-        AppConstants.tokenUri,
-        data: {
-          "_method": "put",
-          "cm_firebase_token": "@"
-        }
-      );
-    } catch(error) {
-      debugPrint('error $error');
-    }
+    // try {
+    //   await dioClient!.post(
+    //     AppConstants.tokenUri,
+    //     data: {
+    //       "_method": "put",
+    //       "cm_firebase_token": "@"
+    //     }
+    //   );
+    // } catch(error) {
+    //   debugPrint('error $error');
+    // }
 
     debugPrint('-------- (update device token) ------- from clearSharedData|repo');
 
-    await updateDeviceToken(fcmToken: '@');
+    // await updateDeviceToken(fcmToken: '@');
     await sharedPreferences!.remove(AppConstants.token);
     await sharedPreferences!.remove(AppConstants.cartList);
     await sharedPreferences!.remove(AppConstants.userAddress);
@@ -72,7 +72,7 @@ class AuthRepo {
         await subscribeTokenToTopic(deviceToken, fcmToken ?? AppConstants.topic);
       }
 
-      Map<String, dynamic> data = {"_method":"put", 'cm_firebase_toke': fcmToken ?? deviceToken};
+      Map<String, dynamic> data = {"_method":"put", 'cm_firebase_token': fcmToken ?? deviceToken};
       Response response = await dioClient!.post(AppConstants.tokenUri, data: data);
       return ApiResponseModel.withSuccess(response);
     } catch(e) {
@@ -83,21 +83,21 @@ class AuthRepo {
   Future<String?> getDeviceToken() async {
     String? deviceToken = '@';
 
-    try {
-      deviceToken = (await FirebaseMessaging.instance.getToken())!;
-    } catch(error) {
-      debugPrint('error ===> $error');
-    }
-
-    if(deviceToken != null) {
-      debugPrint('------ Device Token ------ $deviceToken');
-    }
+    // try {
+    //   deviceToken = (await FirebaseMessaging.instance.getToken())!;
+    // } catch(error) {
+    //   debugPrint('error ===> $error');
+    // }
+    //
+    // if(deviceToken != null) {
+    //   debugPrint('------ Device Token ------ $deviceToken');
+    // }
 
     return deviceToken;
   }
 
   Future<void> subscribeTokenToTopic(dynamic token, dynamic topic) async {
-    await dioClient?.post(AppConstants.subscribeToTopic, data: {"token": '$token', "topic": '$topic'});
+    // await dioClient?.post(AppConstants.subscribeToTopic, data: {"token": '$token', "topic": '$topic'});
   }
 
   bool isLoggedIn() {

@@ -21,7 +21,7 @@ class OrderListWidget extends StatelessWidget {
         if(orderProvider.runningOrderList != null) {
           orderList = isRunning ? orderProvider.runningOrderList : orderProvider.historyOrderList;
         }
-        debugPrint("Order List is null ${orderList == null} & order list is empty ${orderList?.isEmpty}");
+        debugPrint("Order list is null ${orderList == null} & order list is empty ${orderList?.isEmpty}");
         debugPrint("Order list length ${orderList?.length}");
         return orderList != null ? orderList.isNotEmpty ? RefreshIndicator(
           onRefresh: () async {

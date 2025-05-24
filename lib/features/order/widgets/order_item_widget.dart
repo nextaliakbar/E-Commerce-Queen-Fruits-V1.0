@@ -3,6 +3,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/features/order/providers/order_p
 import 'package:ecommerce_app_queen_fruits_v1_0/features/order/widgets/ordered_product_image_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/date_converter_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/price_converter_helper.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/helper/router_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/styles.dart';
@@ -47,7 +48,7 @@ class OrderItemWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
         ),
         child: InkWell(
-          onTap: (){},
+          onTap: ()=> RouterHelper.getOrderDetailsRoute('${orderModel.id}'),
           child: Column(children: [
 
             isRunning
