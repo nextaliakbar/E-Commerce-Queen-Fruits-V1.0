@@ -7,6 +7,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/branch_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/custom_snackbar_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/localization/app_localization.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/util/app_constant.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/images.dart';
@@ -138,7 +139,8 @@ class BranchLogoView extends StatelessWidget {
           placeholder: Images.placeholderImage,
           height: 80, width: 80,
           fit: BoxFit.cover,
-          image: '${splashProvider.baseUrls!.branchImageUrl}/${branchesValue?.branches!.image}',
+          // image: '${splashProvider.baseUrls!.branchImageUrl}/${branchesValue?.branches!.image}',
+          image: '${AppConstants.baseUrl}/source.php?folder=${splashProvider.baseUrls!.branchImageUrl}&file=${branchesValue?.branches!.image}',
         ),
       ),
     );

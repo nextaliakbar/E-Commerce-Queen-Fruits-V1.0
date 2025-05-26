@@ -3,6 +3,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/custom_image_widg
 import 'package:ecommerce_app_queen_fruits_v1_0/features/order/domain/models/order_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/order/providers/order_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash_provider.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/util/app_constant.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/images.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/styles.dart';
@@ -23,7 +24,9 @@ class DeliveryManWidget extends StatelessWidget {
     return Row(children: [
 
       ClipOval(child: CustomImageWidget(
-        image: '${splashProvider.baseUrls?.deliveryManImageUrl}/${deliveryMan.image}',
+        // image: '${splashProvider.baseUrls?.deliveryManImageUrl}/${deliveryMan.image}',
+        image: '${AppConstants.baseUrl}/source.php?folder${{splashProvider.baseUrls?.deliveryManImageUrl}}=&file${deliveryMan.image}',
+        placeholder: Images.placeholderCourier,
         width: 50, height: 50,
       )),
       const SizedBox(width: Dimensions.paddingSizeDefault),

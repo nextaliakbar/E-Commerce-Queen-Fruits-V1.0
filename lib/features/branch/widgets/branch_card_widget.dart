@@ -2,6 +2,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/common/models/config_model.dart'
 import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/custom_image_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/branch/providers/branch_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash_provider.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/util/app_constant.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/images.dart';
@@ -45,7 +46,8 @@ class BranchCardWidget extends StatelessWidget {
                  borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
                  child: CustomImageWidget(
                    placeholder: Images.placeholderRectangle,
-                   image: '${splashProvider.baseUrls!.branchImageUrl}/${branchModel!.branches!.image}',
+                   // image: '${splashProvider.baseUrls!.branchImageUrl}/${branchModel!.branches!.image}',
+                   image: '${AppConstants.baseUrl}/source.php?folder=${splashProvider.baseUrls!.branchImageUrl}&file=${branchModel!.branches!.image}',
                    width: 60, fit: BoxFit.cover, height: 60,
                  ),
                ),

@@ -10,6 +10,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/custom_snackbar_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/responsive_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/router_helper.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/util/app_constant.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/images.dart';
@@ -128,7 +129,8 @@ class _BannerWidgetState extends State<BannerWidget> {
           child: CustomImageWidget(
               placeholder: Images.placeholderImage, width: double.infinity, height: 120,
               fit: BoxFit.cover,
-              image: '${splashProvider.baseUrls!.bannerImageUrl}/${bannerProvider.bannerList![index].image}',
+              // image: '${splashProvider.baseUrls!.bannerImageUrl}/${bannerProvider.bannerList![index].image}',
+              image: '${AppConstants.baseUrl}/source.php?folder=${splashProvider.baseUrls!.bannerImageUrl}&file=${bannerProvider.bannerList![index].image}',
             )))));
         })),
         Positioned(bottom: 8, child: Row(

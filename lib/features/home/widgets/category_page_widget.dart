@@ -2,6 +2,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/custom_image_widg
 import 'package:ecommerce_app_queen_fruits_v1_0/features/category/providers/category_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/router_helper.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/util/app_constant.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/styles.dart';
@@ -29,6 +30,7 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
   Widget build(BuildContext context) {
     final length = 8;
     int totalPage = (widget.categoryProvider.categoryList!.length / length).ceil();
+    debugPrint("Category list lengt ${widget.categoryProvider.categoryList!.length}");
     List<int> totalPageIndexList = [];
 
     for(int i = 0; i < totalPage; i++) {
@@ -75,6 +77,8 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
               int currentIndex0 = i + currentIndex;
               String? name = widget.categoryProvider.categoryList![currentIndex0].name;
 
+              debugPrint("GET URL IMAGE CATEGORY ${AppConstants.baseUrl}/source.php?folder=${splashProvider.baseUrls!.categoryImageUrl}&file=${widget.categoryProvider.categoryList![currentIndex0].image}");
+
               return Column(mainAxisSize: MainAxisSize.min, children: [
                   InkWell(
                     onTap: (){
@@ -93,8 +97,10 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
                       ),
                       child: CustomImageWidget(
                         height: 45, width: 45,
+                        // image: splashProvider.baseUrls != null
+                        // ? '${splashProvider.baseUrls!.categoryImageUrl}/${widget.categoryProvider.categoryList![currentIndex0].image}' : '',
                         image: splashProvider.baseUrls != null
-                        ? '${splashProvider.baseUrls!.categoryImageUrl}/${widget.categoryProvider.categoryList![currentIndex0].image}' : '',
+                          ? '${AppConstants.baseUrl}/source.php?folder=${splashProvider.baseUrls!.categoryImageUrl}&file=${widget.categoryProvider.categoryList![currentIndex0].image}' : '',
                       ),
                     ),
                   ),

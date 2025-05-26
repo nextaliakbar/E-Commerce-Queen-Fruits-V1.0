@@ -16,6 +16,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/helper/custom_snackbar_helper.da
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/date_converter_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/price_converter_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/product_helper.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/util/app_constant.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/images.dart';
@@ -132,7 +133,8 @@ class _HomeItemDetailScreenState extends State<HomeItemDetailScreen> {
                                 itemBuilder: (context, index) {
                                   return Column(children: [
                                     CustomImageWidget(
-                                      image: '${splashProvider.baseUrls!.productImageUrl}/${widget.product!.image}',
+                                      // image: '${splashProvider.baseUrls!.productImageUrl}/${widget.product!.image}',
+                                      image: '${AppConstants.baseUrl}/source.php?folder=${splashProvider.baseUrls!.productImageUrl}&file=${widget.product!.image}',
                                       height: size.height * 0.3,
                                       width: size.width,
                                       fit: BoxFit.cover

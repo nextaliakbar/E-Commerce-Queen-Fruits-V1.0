@@ -12,6 +12,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/custom_snackbar_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/price_converter_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/responsive_helper.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/util/app_constant.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/images.dart';
@@ -58,19 +59,6 @@ class CartProductWidget extends StatelessWidget {
     }
 
     return InkWell(
-      onTap: () {
-
-        ResponsiveHelper.showDialogOrBottomSheet(context, CartBottomSheetWidget(
-          product: cartModel!.product,
-          cartIndex: cartIndex,
-          cart: cartModel,
-          fromCart: true,
-          callback: (CartModel cartModel) {
-            showCustomSnackBarHelper('Perbarui di keranjang', isError: false);
-          },
-        ));
-
-      },
       child: Container(
         margin: const EdgeInsets.only(bottom: Dimensions.paddingSizeDefault),
         decoration: BoxDecoration(
@@ -107,7 +95,8 @@ class CartProductWidget extends StatelessWidget {
                             borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
                             child: CustomImageWidget(
                               placeholder: Images.placeholderImage, height: 80, width: 80,
-                              image: '${splashProvider.baseUrls!.productImageUrl}/${cartModel!.product!.image}',
+                              image: '${AppConstants.baseUrl}/source.php?folder=${splashProvider.baseUrls!.productImageUrl}&file=${cartModel!.product!.image}',
+                              // image: '${splashProvider.baseUrls!.productImageUrl}/${cartModel!.product!.image}',
                             ),
                           ),
 

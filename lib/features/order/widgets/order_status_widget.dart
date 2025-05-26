@@ -70,11 +70,19 @@ class _StatusWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String orderStatus = orderModel?.orderStatus == 'pending' ? 'Tertunda'
-      : orderModel?.orderStatus == 'confirmed' ? 'Dikonfirmaso'
+      : orderModel?.orderStatus == 'confirmed' ? 'Dikonfirmasi'
       : orderModel?.orderStatus == 'processing' ? 'Diproses'
+      : orderModel?.orderStatus == 'out_for_delivery' ? 'Dalam Pengiriman'
       : orderModel?.orderStatus == 'delivered' ? 'Terkirim'
       : orderModel?.orderStatus == 'returned' ? 'Dikembalikan'
       : orderModel?.orderStatus == 'failed' ? 'Gagal' : 'Selesai';
+
+    double? estimateTime = orderModel?.predictionDurationTimeOrder != null
+        && orderModel?.predictionDurationTimeOrder?.predictionDurationResult != null
+        ? (orderModel!.predictionDurationTimeOrder!.predictionDurationResult! / 60) > 60
+        ? orderModel!.predictionDurationTimeOrder!.predictionDurationResult! / 60
+        : orderModel!.predictionDurationTimeOrder!.predictionDurationResult! : null;
+
     return Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
       Expanded(flex: 8, child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
@@ -83,13 +91,15 @@ class _StatusWidget extends StatelessWidget {
         ),
         const SizedBox(height: Dimensions.paddingSizeSmall),
 
-        // !(orderModel?.orderStatus == 'delivered' || orderModel?.orderStatus == 'returned' || orderModel?.orderStatus == 'failed' || orderModel?.orderStatus == 'canceled' || orderModel?.orderStatus == 'completed') ? RichText(text: TextSpan(
-        //   text: "Estimasi pesanan akan tiba dalam ",
-        //   style: rubikRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium?.color),
-        //   children: <TextSpan>[
-        //     TextSpan(text: ' ${DateConverterHelper.getEstimateTime(timerProvider.getEstimateDuration(orderModel, context) ?? const Duration(), context)}', style: rubikSemiBold.copyWith(color: Theme.of(context).textTheme.bodyMedium?.color))
-        //   ],
-        // )): const SizedBox(),
+        !(orderModel?.orderStatus == 'delivered' || orderModel?.orderStatus == 'returned' || orderModel?.orderStatus == 'failed'
+          || orderModel?.orderStatus == 'canceled' || orderModel?.orderStatus == 'completed') && estimateTime != null ? RichText(text: TextSpan(
+          text: "Estimasi pesanan akan tiba dalam ",
+          style: rubikRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium?.color),
+          children: <TextSpan>[
+
+            TextSpan(text: estimateTime > 60 ? '$estimateTime Jam'  : '$estimateTime Menit', style: rubikSemiBold.copyWith(color: ColorResources.primaryColor))
+          ],
+        )): const SizedBox(),
 
         const SizedBox()
 

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:ecommerce_app_queen_fruits_v1_0/common/models/config_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/common/models/product_model.dart';
+import 'package:flutter/cupertino.dart';
 
 class OrderModel {
   int? _id;
@@ -32,7 +33,9 @@ class OrderModel {
   bool? _isProductAvailable;
   List<String>? _productImageList;
   Branches? _branches;
+  double? _durationTime;
   OfflinePaymentInformation? _offlinePaymentInformation;
+  PredictionDurationTimeOrder? _predictionDurationTimeOrder;
 
   OrderModel({
     int? id,
@@ -63,7 +66,9 @@ class OrderModel {
     bool? isProductAvailable,
     List<String>? productImageList,
     Branches? branches,
+    double? durationTime,
     OfflinePaymentInformation? offlinePaymentInformation,
+    PredictionDurationTimeOrder? predictionDurationTimeOrder
   }) {
     _id = id;
     _userId = userId;
@@ -93,7 +98,9 @@ class OrderModel {
     _isProductAvailable = isProductAvailable;
     _productImageList = productImageList;
     _branches = branches;
+    _durationTime = durationTime;
     _offlinePaymentInformation = offlinePaymentInformation;
+    _predictionDurationTimeOrder = predictionDurationTimeOrder;
   }
 
   int? get id => _id;
@@ -104,9 +111,7 @@ class OrderModel {
   String? get paymentStatus => _paymentStatus;
   String? get orderStatus => _orderStatus;
   double? get totalTaxAmount => _totalTaxAmount;
-  // ignore: unnecessary_getters_setters
   String? get paymentMethod => _paymentMethod;
-  // ignore: unnecessary_getters_setters
   set paymentMethod(String? method) => _paymentMethod = method;
   String? get transactionReference => _transactionReference;
   int? get deliveryAddressId => _deliveryAddressId;
@@ -126,7 +131,10 @@ class OrderModel {
   bool? get isProductAvailable => _isProductAvailable;
   List<String>? get productImageList => _productImageList;
   Branches? get branches => _branches;
+  double? get durationTime => _durationTime;
   OfflinePaymentInformation? get offlinePaymentInformation => _offlinePaymentInformation;
+  PredictionDurationTimeOrder? get predictionDurationTimeOrder => _predictionDurationTimeOrder;
+
 
   OrderModel.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
@@ -171,15 +179,18 @@ class OrderModel {
         ? DeliveryAddress.fromJson(json['delivery_address'])
         : null;
     _preparationTime = json['preparation_time'].toString();
-    // print('order pre time -- $_preparationTime');
     _isProductAvailable = int.tryParse('${json['is_product_available']}') == 1 ? true : false;
     _productImageList = json.containsKey('product_images') ? json['product_images'].cast<String>() : null;
 
     if(json['branch'] != null) {
       _branches = Branches.fromJson(json['branch']);
     }
+    _durationTime = json['duration_time'];
     _offlinePaymentInformation = json["offline_payment_information"] == null
         ? null : OfflinePaymentInformation.fromMap(json["offline_payment_information"]);
+
+    _predictionDurationTimeOrder = json['prediction_duration_time_order'] != null
+        ? PredictionDurationTimeOrder.fromJson(json['prediction_duration_time_order']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -513,4 +524,48 @@ class MethodValue {
   MethodValue({this.value, this.key});
 
   factory MethodValue.fromMap(Map<String, dynamic> json) => MethodValue(value: json[json.keys.first], key: json.keys.first);
+}
+
+class PredictionDurationTimeOrder {
+  int? _id;
+  int? _orderId;
+  int? _deliveryPersonAge;
+  double? _deliveryPersonRating;
+  double? _distance;
+  double? _predictionDurationResult;
+
+  PredictionDurationTimeOrder({
+    int? id,
+    int? orderId,
+    int? deliveryPersonAge,
+    double? deliveryPersonRating,
+    double? distance,
+    double? predictionDurationResult
+  }) {
+    _id = id;
+    _orderId = orderId;
+    _deliveryPersonAge = deliveryPersonAge;
+    _deliveryPersonRating = deliveryPersonRating;
+    _distance = distance;
+    _predictionDurationResult = predictionDurationResult;
+  }
+
+  int? get id => _id;
+  int? get orderId => _orderId;
+  int? get deliveryPersonAge => _deliveryPersonAge;
+  double? get deliveryPersonRating => _deliveryPersonRating;
+  double? get distance => _distance;
+  double? get predictionDurationResult => _predictionDurationResult;
+
+  PredictionDurationTimeOrder.fromJson(Map<String, dynamic> json) {
+    _id = json['id'];
+    _orderId = json['order_id'];
+    _deliveryPersonAge = json['delivery_person_age'];
+    _deliveryPersonRating = json['delivery_person_rating'] != null
+    ? double.tryParse(json['delivery_person_rating'].toString()) : 0.0;
+    _distance = double.tryParse(json['distance'].toString());
+    _predictionDurationResult = double.tryParse(json['prediction_duration_result'].toString());
+  }
+
+
 }

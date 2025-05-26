@@ -1,6 +1,7 @@
 import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/custom_image_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/order/domain/models/order_model.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash_provider.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/util/app_constant.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +28,8 @@ class OrderedProductImageWidget extends StatelessWidget {
       itemBuilder: (context, index) => (index < 3 ) || (orderModel.productImageList?.length ?? 0) == 4  ? ClipRRect(
         borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
         child: CustomImageWidget(
-          image: '${splashProvider.configModel?.baseUrls?.productImageUrl}/${orderModel.productImageList?[index]}',
+          // image: '${splashProvider.configModel?.baseUrls?.productImageUrl}/${orderModel.productImageList?[index]}',
+          image: '${AppConstants.baseUrl}/source.php?folder=${splashProvider.configModel?.baseUrls?.productImageUrl}&file=${orderModel.productImageList?[index]}',
           height: 30, width: 30,
         ),
       ) : const Card(

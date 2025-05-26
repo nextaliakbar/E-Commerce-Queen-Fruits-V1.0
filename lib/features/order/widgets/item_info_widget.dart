@@ -4,6 +4,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/custom_image_widg
 import 'package:ecommerce_app_queen_fruits_v1_0/features/order/providers/order_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/price_converter_helper.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/util/app_constant.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/images.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/styles.dart';
@@ -44,8 +45,8 @@ class ItemInfoWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
                 child: CustomImageWidget(
                   placeholder: Images.placeholderImage, height: 50, width: 50,
-                  image: '${splashProvider.baseUrls!.productImageUrl}/'
-                      '${orderProvider.orderDetails![index].productDetails!.image}',
+                  // image: '${splashProvider.baseUrls!.productImageUrl}/${orderProvider.orderDetails![index].productDetails!.image}',
+                  image: '${AppConstants.baseUrl}/source.php?folder=${splashProvider.baseUrls!.productImageUrl}&file=${orderProvider.orderDetails![index].productDetails!.image}',
                 ),
               ),
               const SizedBox(width: Dimensions.paddingSizeSmall),

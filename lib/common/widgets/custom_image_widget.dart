@@ -20,12 +20,19 @@ class CustomImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // return Image.network(
+    //   image, height: height, width: width, fit: fit,
+    //   errorBuilder: (context, error, e) {
+    //     debugPrint("Error loading image: ${error.toString()} from $image");
+    //     return Image.asset(placeholder.isNotEmpty ? placeholder : Images.placeholderImage, height: height, width: width, fit: fit);
+    //   },
+    // );
     return CachedNetworkImage(
       imageUrl: image, height: height, width: width, fit: fit,
       placeholder: (context, url) => Image.asset(placeholder.isNotEmpty ? placeholder : Images.placeholderImage, height: height, width: width, fit: fit),
       // errorWidget: (context, url, error) => Image.asset(placeholder.isNotEmpty ? placeholder : Images.placeholderImage, height: height, width: width, fit: fit),
       errorWidget: (context, url, error) {
-        // debugPrint("Error loading image: $error from $image");
+        debugPrint("Error loading image: $error from $image");
         return Image.asset(placeholder.isNotEmpty ? placeholder : Images.placeholderImage, height: height, width: width, fit: fit);
       },
     );

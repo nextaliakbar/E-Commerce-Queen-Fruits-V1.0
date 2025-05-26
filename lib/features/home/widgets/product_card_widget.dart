@@ -13,6 +13,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/features/home/screens/home_item_
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/price_converter_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/product_helper.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/util/app_constant.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/images.dart';
@@ -51,8 +52,9 @@ class ProductCardWidget extends StatelessWidget {
 
     return Consumer<CartProvider>(
       builder: (context, cartProvider, _) {
-        String productImage = '${splashProvider.baseUrls!.productImageUrl}/${product.image}';
-        // String productImage = 'https://queenfruits.mitrajamur.com/storage/product/2025-05-24-683135ebb3b25.jpg';
+        // String productImage = '${splashProvider.baseUrls!.productImageUrl}/${product.image}';
+        String productImage = '${AppConstants.baseUrl}/source.php?folder=${splashProvider.baseUrls!.productImageUrl}&file=${product.image}';
+        debugPrint("Product image url $productImage");
         return Container(
           decoration: productGroup == ProductGroup.frequentlyBought ? const BoxDecoration() : BoxDecoration(
             boxShadow: [BoxShadow(

@@ -6,6 +6,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/product_shimmer_w
 import 'package:ecommerce_app_queen_fruits_v1_0/features/category/providers/category_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/home/widgets/product_card_widget.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash_provider.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/util/app_constant.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/images.dart';
@@ -65,7 +66,7 @@ class _CategoryScreenState extends State<CategoryScreen> with TickerProviderStat
 
     final Size size = MediaQuery.of(context).size;
     final double realSpaceNeeded = (size.width - Dimensions.webScreenWidth) / 2;
-
+    debugPrint("Category Banner Image : ${splashProvider.baseUrls?.categoryImageUrl}/${widget.categoryBannerImage}");
     return Scaffold(
       body: Consumer<CategoryProvider>(builder: (context, categoryProvider, child) {
           return categoryProvider.isLoading || categoryProvider.categoryList == null
@@ -111,7 +112,8 @@ class _CategoryScreenState extends State<CategoryScreen> with TickerProviderStat
                           margin: const EdgeInsets.only(bottom: 50),
                           child: CustomImageWidget(
                             placeholder: Images.categoryBanner, fit: BoxFit.cover,
-                            image: '${splashProvider.baseUrls?.categoryImageUrl}/${widget.categoryBannerImage}',
+                            // image: '${splashProvider.baseUrls?.categoryImageUrl}/${widget.categoryBannerImage}',
+                            image: '${AppConstants.baseUrl}/source.php?folder=${splashProvider.baseUrls?.categoryBannerImageUrl}&file=${widget.categoryBannerImage}',
                           ),
                         ),
                       ),

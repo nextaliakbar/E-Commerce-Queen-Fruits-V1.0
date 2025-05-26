@@ -18,6 +18,7 @@ class Images {
   static const String noProductImage = 'assets/image/no_food.png';
   static const String categoryBanner = 'assets/image/category_banner.png';
   static const String placeholderUser = 'assets/image/placeholder_user.png';
+  static const String placeholderCourier = 'assets/image/placeholder_courier.png';
   static const String login = 'assets/image/login.png';
   static const String webAppBarLogo = 'web/assets/logo_store_2.png';
   static const String marker = 'assets/icon/marker.png';

@@ -3,6 +3,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/common/widgets/custom_image_widg
 import 'package:ecommerce_app_queen_fruits_v1_0/features/branch/providers/branch_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/splash/providers/splash_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/helper/custom_snackbar_helper.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/util/app_constant.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/images.dart';
@@ -51,7 +52,8 @@ class BranchItemCardWidget extends StatelessWidget {
                     child: Stack(children: [
                       CustomImageWidget(
                         placeholder: Images.branchBanner,
-                        image: '${splashProvider.baseUrls!.branchImageUrl}/${branchesValue!.branches!.coverImage}',
+                        // image: '${splashProvider.baseUrls!.branchImageUrl}/${branchesValue!.branches!.coverImage}',
+                        image: '${AppConstants.baseUrl}/source.php?folder=${splashProvider.baseUrls!.branchImageUrl}&file=${branchesValue!.branches!.coverImage}',
                         width: Dimensions.webScreenWidth,
                       ),
 
@@ -137,7 +139,8 @@ class BranchItemCardWidget extends StatelessWidget {
                  ),
                  child: ClipRRect(borderRadius: BorderRadius.circular(Dimensions.radiusSmall), child: CustomImageWidget(
                    placeholder: Images.placeholderImage,
-                   image: '${splashProvider.baseUrls!.branchImageUrl}/${branchesValue!.branches!.image}',
+                   // image: '${splashProvider.baseUrls!.branchImageUrl}/${branchesValue!.branches!.image}',
+                   image: '${AppConstants.baseUrl}/source.php?folder=${splashProvider.baseUrls!.branchImageUrl}&file=${branchesValue!.branches!.image}',
                    height: 70, width: 70,
                  ),),
                ),
