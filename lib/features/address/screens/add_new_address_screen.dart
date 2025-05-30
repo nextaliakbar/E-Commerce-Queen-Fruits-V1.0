@@ -272,7 +272,19 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
         );
 
         if(widget.isEnableUpdate) {
-
+          addressModel.id = widget.addressModel!.id;
+          addressModel.userId = widget.addressModel!.userId;
+          addressModel.method = 'put';
+          locationProvider.updateAddress(context, addressModel: addressModel, addressId: addressModel.id).then((value) {
+            if(value.isSuccess){
+              if(Get.context!.canPop()) {
+                Get.context!.pop();
+              }
+              showCustomSnackBarHelper("Alamat berhasil diperbarui", isError: false);
+            }  else {
+              showCustomSnackBarHelper("Alamat gagal diperbarui, silahkan ulangi kembali");
+            }
+          });
         } else {
           locationProvider.addAddress(addressModel).then((value) {
             if(value.isSuccess) {

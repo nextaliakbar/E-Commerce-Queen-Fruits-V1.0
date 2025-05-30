@@ -88,7 +88,7 @@ class DeliveryDetailsWidget extends StatelessWidget {
                     ? Icons.work_outline
                     : Icons.list_alt_outlined,
                 title: deliveryAddress.addressType == 'Home' ? 'Rumah'
-                : deliveryAddress.addressType == 'Workplace' ? 'Kantor' : ''
+                : deliveryAddress.addressType == 'Workplace' ? 'Kantor' : 'Lainnya'
               ),
               const SizedBox(height: Dimensions.paddingSizeSmall),
 

@@ -4,6 +4,7 @@ import 'package:ecommerce_app_queen_fruits_v1_0/features/address/providers/locat
 import 'package:ecommerce_app_queen_fruits_v1_0/features/cart/providers/cart_provider.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/cart/screens/cart_screen.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/dashboard/widgets/bottom_nav_item_widget.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/features/expenses/screens/expenses_screen.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/home/screens/home_screen.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/menu/screens/menu_screen.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/features/order/providers/order_provider.dart';
@@ -57,7 +58,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
 
     _screens = [
       const HomeScreen(false),
-      const HomeScreen(false),
+      const ExpensesScreen(),
       const CartScreen(),
       const OrderScreen(),
       MenuScreen(onTap: (int pageIndex) {
@@ -156,13 +157,23 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                               onTap: ()=> _setPage(0),
                             ),
 
+                            // BottomNavItemWidget(
+                            //   title: "Favorit",
+                            //   imageIcon: Images.favoriteSvg,
+                            //   isSelected: _pageIndex == 1,
+                            //   onTap: () {
+                            //     _setPage(1);
+                            //     showCustomSnackBarHelper("Fitur dalam tahap pengembangan");
+                            //   },
+                            // ),
+
                             BottomNavItemWidget(
-                              title: "Favorit",
-                              imageIcon: Images.favoriteSvg,
+                              title: "Belanja",
+                              imageIcon: Images.barchartSvg,
                               isSelected: _pageIndex == 1,
                               onTap: () {
                                 _setPage(1);
-                                showCustomSnackBarHelper("Fitur dalam tahap pengembangan");
+                                // showCustomSnackBarHelper("Fitur dalam tahap pengembangan");
                               },
                             ),
 

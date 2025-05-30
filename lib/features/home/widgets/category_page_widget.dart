@@ -30,7 +30,6 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
   Widget build(BuildContext context) {
     final length = 8;
     int totalPage = (widget.categoryProvider.categoryList!.length / length).ceil();
-    debugPrint("Category list lengt ${widget.categoryProvider.categoryList!.length}");
     List<int> totalPageIndexList = [];
 
     for(int i = 0; i < totalPage; i++) {
@@ -76,9 +75,6 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
             itemBuilder: (context, i) {
               int currentIndex0 = i + currentIndex;
               String? name = widget.categoryProvider.categoryList![currentIndex0].name;
-
-              debugPrint("GET URL IMAGE CATEGORY ${AppConstants.baseUrl}/source.php?folder=${splashProvider.baseUrls!.categoryImageUrl}&file=${widget.categoryProvider.categoryList![currentIndex0].image}");
-
               return Column(mainAxisSize: MainAxisSize.min, children: [
                   InkWell(
                     onTap: (){

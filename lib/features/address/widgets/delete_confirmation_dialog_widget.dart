@@ -1,9 +1,12 @@
 import 'package:ecommerce_app_queen_fruits_v1_0/features/address/domain/models/address_model.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/features/address/providers/location_provider.dart';
+import 'package:ecommerce_app_queen_fruits_v1_0/helper/custom_snackbar_helper.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/color_resources.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/dimensions.dart';
 import 'package:ecommerce_app_queen_fruits_v1_0/util/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class DeleteConfirmationDialogWidget extends StatelessWidget {
   final AddressModel addressModel;
@@ -41,7 +44,19 @@ class DeleteConfirmationDialogWidget extends StatelessWidget {
 
           Row(children: [
             Expanded(child: InkWell(
-              onTap: (){},
+              onTap: (){
+                showDialog(context: context, barrierDismissible: false, builder: (context) => Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(ColorResources.primaryColor)
+                  ),
+                ));
+
+                Provider.of<LocationProvider>(context, listen: false).deleteUserAddressById(addressModel.id, index, (bool isSuccess, String message){
+                  context.pop();
+                  showCustomSnackBarHelper(message, isError: !isSuccess);
+                  context.pop();
+                });
+              },
               child: Container(
                 padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
                 alignment: Alignment.center,

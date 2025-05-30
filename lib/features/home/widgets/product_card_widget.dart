@@ -54,7 +54,6 @@ class ProductCardWidget extends StatelessWidget {
       builder: (context, cartProvider, _) {
         // String productImage = '${splashProvider.baseUrls!.productImageUrl}/${product.image}';
         String productImage = '${AppConstants.baseUrl}/source.php?folder=${splashProvider.baseUrls!.productImageUrl}&file=${product.image}';
-        debugPrint("Product image url $productImage");
         return Container(
           decoration: productGroup == ProductGroup.frequentlyBought ? const BoxDecoration() : BoxDecoration(
             boxShadow: [BoxShadow(

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:universal_html/js_util.dart';
 
 class LocationProvider with ChangeNotifier {
   final LocationRepo? locationRepo;
@@ -336,5 +337,46 @@ class LocationProvider with ChangeNotifier {
     }
 
     return index;
+  }
+
+  Future<ResponseModel> updateAddress(BuildContext context, {required AddressModel addressModel, int? addressId}) async {
+    _isLoading = true;
+    notifyListeners();
+    _errorMessage = '';
+    _addressStatusMessage = null;
+    ApiResponseModel apiResponse = await locationRepo!.updateAddress(addressModel, addressId);
+    ResponseModel responseModel;
+
+    if(apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+      Map map = apiResponse.response!.data;
+      initAddressList();
+      String? message = map['message'];
+      responseModel = ResponseModel(true, message);
+      _addressStatusMessage = message;
+    } else {
+      _errorMessage = ApiCheckerHelper.getError(apiResponse).errors![0].message;
+      responseModel = ResponseModel(false, _errorMessage);
+    }
+
+    _isLoading = false;
+    notifyListeners();
+    return responseModel;
+  }
+
+  Future<void> deleteUserAddressById(int? id, int index, Function callback) async {
+    _isLoading = true;
+    notifyListeners();
+
+    ApiResponseModel apiResponse = await locationRepo!.deleteUserAddressById(id);
+
+    _isLoading = false;
+    notifyListeners();
+
+    if(apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+      _addressList!.removeAt(index);
+      callback(true, 'Alamat berhasil dihapus');
+    } else {
+      callback(false, "Alamat gagal dihapus, silahkan ulangi lagi");
+    }
   }
 }

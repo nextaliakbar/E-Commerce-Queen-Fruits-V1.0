@@ -43,6 +43,7 @@ class Images {
   static const String logoutSvg = 'assets/svg/logout.svg';
   static const String forYouSvg = 'assets/svg/for_you.svg';
   static const String favoriteSvg = 'assets/svg/favorite.svg';
+  static const String barchartSvg = 'assets/svg/bar-chart.svg';
   static const String cartSvg = 'assets/svg/cart-5.svg';
   static const String shopSvg = 'assets/svg/shop_svg.svg';
   static const String menuSvg = 'assets/svg/menu_svg.svg';

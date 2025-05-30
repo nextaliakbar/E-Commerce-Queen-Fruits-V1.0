@@ -60,4 +60,29 @@ class LocationRepo {
       return ApiResponseModel.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
+  Future<ApiResponseModel> updateAddress(AddressModel addressModel, int? addressId) async {
+    try {
+      Response response =  await dioClient!.post(
+        '${AppConstants.updateAddressUri}$addressId',
+        data: addressModel.toJson()
+      );
+      return ApiResponseModel.withSuccess(response);
+    } catch(e) {
+      return ApiResponseModel.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponseModel> deleteUserAddressById(int? id) async {
+    try {
+      final response = await dioClient!.post(
+        '${AppConstants.removeAddressUri}$id',
+        data: {"_method":"delete"}
+      );
+
+      return ApiResponseModel.withSuccess(response);
+    } catch(e) {
+      return ApiResponseModel.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
 }

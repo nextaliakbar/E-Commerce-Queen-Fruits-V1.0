@@ -26,6 +26,8 @@ class AppConstants {
   static const String registerUri = '/api/v1/auth/registration'; // completed
   static const String addressListUri = '/api/v1/customer/address/list'; // completed
   static const String addAddressUri = '/api/v1/customer/address/add'; // completed
+  static const String updateAddressUri = '/api/v1/customer/address/update/'; // completed
+  static const String removeAddressUri = '/api/v1/customer/address/delete?address_id='; // completed
   static const String offlinePaymentMethod = '/api/v1/offline-payment-method/list'; // completed
   static const String lastOrderedAddress = '/api/v1/customer/last-ordered-address'; // completed
   static const String distanceMatrixUri = '/api/v1/mapapi/distance-api'; // completed
@@ -35,6 +37,7 @@ class AppConstants {
   static const String trackUri = '/api/v1/customer/order/track-without-phone?order_id='; // completed
   static const String orderDetailsWithPhoneNumber = '/api/v1/customer/order/details-with-phone'; // completed
   static const String trackOrderWithPhoneNumber = '/api/v1/customer/order/track-with-phone'; // completed
+  static const String expensesUri = '/api/v1/customer/order/expenses-chart'; // completed
 
   // Shared key
   static const String token = "token";

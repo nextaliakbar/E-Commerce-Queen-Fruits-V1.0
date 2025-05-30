@@ -93,4 +93,15 @@ class OrderRepo {
       return ApiResponseModel.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
+  Future<ApiResponseModel> getExpenses(int branchId, int year, int month) async {
+    try {
+      final response = await dioClient!.get('${AppConstants.expensesUri}?branch_id=$branchId'
+          '&&year=$year&&month=$month');
+      return ApiResponseModel.withSuccess(response);
+    } catch(e) {
+      return ApiResponseModel.withError(ApiErrorHandler.getMessage(e));
+    }
+
+  }
 }

@@ -63,4 +63,9 @@ class AddressModel {
     data['is_default'] = (isDefault ?? false) ? 1 : 0;
     return data;
   }
+
+  @override
+  String toString() {
+    return 'AddressModel{id: $id, addressType: $addressType, contactPersonNumber: $contactPersonNumber, address: $address, latitude: $latitude, longitude: $longitude, createdAt: $createdAt, updatedAt: $updatedAt, userId: $userId, method: $method, contactPersonName: $contactPersonName, isDefault: $isDefault}';
+  }
 }

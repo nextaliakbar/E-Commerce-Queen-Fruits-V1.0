@@ -83,6 +83,8 @@ class _StatusWidget extends StatelessWidget {
         ? orderModel!.predictionDurationTimeOrder!.predictionDurationResult! / 60
         : orderModel!.predictionDurationTimeOrder!.predictionDurationResult! : null;
 
+
+
     return Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
       Expanded(flex: 8, child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
